@@ -1,9 +1,10 @@
-/* Tailwind CSS Directives - REQUIRED */
+/* Font Import - MUST be first */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Pretendard:wght@300;400;500;600;700&display=swap');
+
+/* Tailwind CSS Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Pretendard:wght@300;400;500;600;700&display=swap');
 
 /* ============================================
    AURA Design System - Lighter & Atmospheric

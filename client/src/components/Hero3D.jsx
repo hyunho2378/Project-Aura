@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 /**
- * CosmeticBottle - Optimized 3D Glass Bottle (Positioned Right)
+ * CosmeticBottle - 3D Glass Bottle (Right side)
  */
 function CosmeticBottle() {
     const bottleRef = useRef();
@@ -98,7 +98,7 @@ function Scene() {
 }
 
 /**
- * Hero3D Component - Left-aligned English text with 3D on right
+ * Hero3D - Left-aligned text with global container
  */
 export default function Hero3D() {
     const navigate = useNavigate();
@@ -121,14 +121,14 @@ export default function Hero3D() {
     };
 
     return (
-        <section className="relative w-full h-screen overflow-hidden">
+        <section className="relative w-full h-screen overflow-hidden bg-[#0a0f1a]">
             {/* Ambient Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="ambient-glow ambient-glow-1" />
                 <div className="ambient-glow ambient-glow-2" />
             </div>
 
-            {/* 3D Canvas - Positioned more to the right */}
+            {/* 3D Canvas - Right side */}
             <div className="absolute inset-0 z-10">
                 <Canvas
                     camera={{ position: [0, 0, 5], fov: 45 }}
@@ -140,59 +140,63 @@ export default function Hero3D() {
                 </Canvas>
             </div>
 
-            {/* Text Content - LEFT ALIGNED */}
-            <motion.div
-                className="relative z-20 flex flex-col items-start justify-center h-full px-8 md:px-16 lg:px-24 xl:px-32 pointer-events-none max-w-4xl"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-            >
-                {/* Headline */}
-                <motion.h1
-                    variants={itemVariants}
-                    className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-medium tracking-tight leading-[1.05] mb-6 text-left"
+            {/* Text Content - Global Container Alignment */}
+            <div className="relative z-20 h-full max-w-screen-xl mx-auto px-6 lg:px-16">
+                <motion.div
+                    className="flex flex-col items-start justify-center h-full max-w-xl pointer-events-none"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
                 >
-                    Sculpting Beauty
-                    <br />
-                    <span className="italic font-normal text-white/90">with Your Data.</span>
-                </motion.h1>
-
-                {/* Subtext */}
-                <motion.p
-                    variants={itemVariants}
-                    className="font-sans text-base md:text-lg text-white/50 max-w-lg mb-10 text-left leading-relaxed"
-                >
-                    Experience the hyper-personalized wellness solution.
-                </motion.p>
-
-                {/* CTA Buttons */}
-                <motion.div variants={itemVariants} className="flex gap-4 pointer-events-auto">
-                    <button
-                        onClick={() => navigate('/diagnosis')}
-                        className="btn-primary"
+                    {/* Headline */}
+                    <motion.h1
+                        variants={itemVariants}
+                        className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05] mb-6 text-left"
                     >
-                        <span>Start Diagnosis</span>
-                    </button>
-                    <button
-                        onClick={() => navigate('/shop')}
-                        className="btn-glass"
+                        Sculpting Beauty
+                        <br />
+                        <span className="italic font-normal text-white/90">with Your Data.</span>
+                    </motion.h1>
+
+                    {/* Subtext */}
+                    <motion.p
+                        variants={itemVariants}
+                        className="font-sans text-base md:text-lg text-white/50 max-w-md mb-10 text-left leading-relaxed"
                     >
-                        Explore Shop
-                    </button>
+                        Experience the hyper-personalized wellness solution.
+                    </motion.p>
+
+                    {/* CTA Buttons */}
+                    <motion.div variants={itemVariants} className="flex gap-4 pointer-events-auto">
+                        <button
+                            onClick={() => navigate('/analysis')}
+                            className="btn-primary"
+                        >
+                            <span>Start Analysis</span>
+                        </button>
+                        <button
+                            onClick={() => navigate('/curations')}
+                            className="btn-glass"
+                        >
+                            Explore Curations
+                        </button>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
+            </div>
 
-            {/* Scroll Indicator */}
+            {/* Scroll Indicator - Aligned with container */}
             <motion.div
-                className="absolute bottom-8 left-8 md:left-16 lg:left-24 z-20 flex items-center gap-3"
+                className="absolute bottom-8 z-20 max-w-screen-xl mx-auto px-6 lg:px-16 left-0 right-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.5, duration: 0.8 }}
             >
-                <div className="w-8 h-[1px] bg-gradient-to-r from-white/40 to-transparent" />
-                <span className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-sans">
-                    Scroll to explore
-                </span>
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-[1px] bg-gradient-to-r from-white/40 to-transparent" />
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-sans">
+                        Scroll to explore
+                    </span>
+                </div>
             </motion.div>
         </section>
     );

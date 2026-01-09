@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
+// Context
+import { LanguageProvider } from './context/LanguageContext';
+
 // Components
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,7 +12,9 @@ import AuthModal from './components/AuthModal';
 // Pages
 import Home from './pages/Home';
 import AuraStory from './pages/AuraStory';
+import BrandStory from './pages/BrandStory';
 import Shop from './pages/Shop';
+import Curations from './pages/Curations';
 import Dashboard from './pages/Dashboard';
 import Algorithm from './pages/Algorithm';
 import ProductDetail from './pages/ProductDetail';
@@ -22,7 +27,7 @@ import Diagnosis from './pages/Diagnosis';
  */
 function AppLayout({ children, onLoginClick, isLoggedIn, onLogout, user }) {
     return (
-        <div className="relative min-h-screen">
+        <div className="relative min-h-screen bg-[#0a0f1a]">
             <Header
                 onLoginClick={onLoginClick}
                 isLoggedIn={isLoggedIn}
@@ -85,16 +90,23 @@ function AppContent() {
                 {/* Home */}
                 <Route path="/" element={<AppLayout {...layoutProps}><Home /></AppLayout>} />
 
-                {/* Brand Story */}
+                {/* Brand Story (new) */}
+                <Route path="/brand" element={<AppLayout {...layoutProps}><BrandStory /></AppLayout>} />
+
+                {/* Aura Story (legacy) */}
                 <Route path="/aura" element={<AppLayout {...layoutProps}><AuraStory /></AppLayout>} />
 
                 {/* Algorithm Lab */}
                 <Route path="/algorithm" element={<AppLayout {...layoutProps}><Algorithm /></AppLayout>} />
 
-                {/* Diagnosis */}
+                {/* Analysis (renamed from Diagnosis) */}
+                <Route path="/analysis" element={<AppLayout {...layoutProps}><Diagnosis /></AppLayout>} />
                 <Route path="/diagnosis" element={<AppLayout {...layoutProps}><Diagnosis /></AppLayout>} />
 
-                {/* Shop / Curations */}
+                {/* Curations (new) */}
+                <Route path="/curations" element={<AppLayout {...layoutProps}><Curations /></AppLayout>} />
+
+                {/* Shop */}
                 <Route path="/shop" element={<AppLayout {...layoutProps}><Shop /></AppLayout>} />
 
                 {/* Product Detail */}
@@ -121,9 +133,11 @@ function AppContent() {
 
 function App() {
     return (
-        <Router>
-            <AppContent />
-        </Router>
+        <LanguageProvider>
+            <Router>
+                <AppContent />
+            </Router>
+        </LanguageProvider>
     );
 }
 

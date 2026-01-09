@@ -1,18 +1,27 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
- * Header Component
+ * Navigation Menu Items
+ */
+const MENU_ITEMS = [
+    { id: 1, label: 'Brand Story', href: '/brand' },
+    { id: 2, label: 'AI Analysis', href: '/analysis' },
+    { id: 3, label: 'Curations', href: '/curations' },
+];
+
+/**
+ * Header Component - Global Luxury Beauty Standard
  * 
- * High-end navigation with corrected menu structure:
- * Logo (AURA → /) | AURA | Diagnosis | Curations | [Globe] [User]
+ * Layout: Logo (Left) | Empty Center | Nav + Utilities (Right)
+ * Reference: Aesop, Tamburins, Amorepacific
  */
 export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isLangOpen, setIsLangOpen] = useState(false);
-    const navigate = useNavigate();
+    const { language, toggleLanguage } = useLanguage();
     const location = useLocation();
 
     useEffect(() => {
@@ -21,16 +30,9 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close mobile menu on route change
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location.pathname]);
-
-    const menuItems = [
-        { label: 'AURA', href: '/aura' },
-        { label: 'Diagnosis', href: '/diagnosis' },
-        { label: 'Curations', href: '/shop' },
-    ];
 
     const isActive = (href) => location.pathname === href;
 
@@ -41,92 +43,88 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                 className={`
-          fixed top-0 left-0 right-0 z-50
-          h-[72px] md:h-[80px] px-6 md:px-12 lg:px-20
-          flex items-center justify-between
-          transition-all duration-500
-          ${isScrolled ? 'glass' : 'bg-transparent'}
-        `}
+                    fixed top-0 left-0 right-0 z-50
+                    h-16 md:h-20
+                    transition-all duration-500
+                    ${isScrolled ? 'bg-[#0a0f1a]/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'}
+                `}
             >
-                {/* Logo - Links to Home */}
-                <Link
-                    to="/"
-                    className="font-serif text-xl md:text-2xl font-semibold tracking-wide text-white hover:opacity-80 transition-opacity"
-                >
-                    AURA
-                </Link>
+                {/* Global Container - Shared alignment with content */}
+                <div className="max-w-screen-xl mx-auto px-6 lg:px-16 h-full flex items-center justify-between">
 
-                {/* Center Navigation - Desktop */}
-                <nav className="hidden lg:flex items-center gap-10">
-                    {menuItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            to={item.href}
-                            className={`
-                nav-link text-sm tracking-wide
-                ${isActive(item.href) ? 'text-white' : 'text-white/60'}
-              `}
-                        >
-                            {item.label}
-                        </Link>
-                    ))}
-                </nav>
+                    {/* Left: Logo */}
+                    <Link
+                        to="/"
+                        className="font-serif text-xl md:text-2xl font-medium tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
+                    >
+                        AURA
+                    </Link>
 
-                {/* Right Section */}
-                <div className="flex items-center gap-3 md:gap-4">
-                    {/* Language Selector */}
-                    <div className="relative">
-                        <button
-                            onClick={() => setIsLangOpen(!isLangOpen)}
-                            className="p-2 text-white/60 hover:text-white transition-colors"
-                            aria-label="Language"
-                        >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M2 12h20" />
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            </svg>
-                        </button>
+                    {/* Center: Empty (for luxury spacing) */}
+                    <div className="hidden lg:block flex-1" />
 
-                        <AnimatePresence>
-                            {isLangOpen && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    className="absolute right-0 top-full mt-2 py-2 px-1 rounded-xl glass min-w-[120px]"
+                    {/* Right: Navigation + Utilities */}
+                    <div className="hidden lg:flex items-center gap-12">
+                        {/* Navigation Links */}
+                        <nav className="flex items-center gap-10">
+                            {MENU_ITEMS.map((item) => (
+                                <Link
+                                    key={item.id}
+                                    to={item.href}
+                                    className={`
+                                        relative text-[13px] tracking-[0.1em] uppercase font-sans
+                                        ${isActive(item.href) ? 'text-white' : 'text-white/50'}
+                                        hover:text-white transition-colors duration-300
+                                    `}
                                 >
-                                    {['English', '한국어', '中文'].map((lang) => (
-                                        <button
-                                            key={lang}
-                                            onClick={() => setIsLangOpen(false)}
-                                            className="w-full px-4 py-2 text-left text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                                        >
-                                            {lang}
-                                        </button>
-                                    ))}
-                                </motion.div>
+                                    {item.label}
+                                    {isActive(item.href) && (
+                                        <motion.div
+                                            layoutId="nav-underline"
+                                            className="absolute -bottom-1 left-0 right-0 h-[1px] bg-white/60"
+                                        />
+                                    )}
+                                </Link>
+                            ))}
+                        </nav>
+
+                        {/* Divider */}
+                        <div className="w-[1px] h-4 bg-white/10" />
+
+                        {/* Utilities: Language Toggle + Login */}
+                        <div className="flex items-center gap-6">
+                            {/* Language Toggle */}
+                            <button
+                                onClick={toggleLanguage}
+                                className="flex items-center gap-1.5 text-[12px] tracking-wide font-sans
+                                           text-white/50 hover:text-white transition-colors duration-300"
+                                aria-label="Toggle Language"
+                            >
+                                <span className={language === 'ko' ? 'text-white' : ''}>KR</span>
+                                <span className="text-white/20">/</span>
+                                <span className={language === 'en' ? 'text-white' : ''}>EN</span>
+                            </button>
+
+                            {/* User Button */}
+                            {isLoggedIn ? (
+                                <Link
+                                    to="/dashboard"
+                                    className="text-[12px] tracking-wide font-sans text-white/50 hover:text-white transition-colors duration-300"
+                                >
+                                    My Page
+                                </Link>
+                            ) : (
+                                <button
+                                    onClick={onLoginClick}
+                                    className="text-[12px] tracking-wide font-sans text-white/50 hover:text-white transition-colors duration-300"
+                                >
+                                    Login
+                                </button>
                             )}
-                        </AnimatePresence>
+                        </div>
                     </div>
 
-                    {/* User Button */}
-                    {isLoggedIn ? (
-                        <div className="hidden sm:flex items-center gap-3">
-                            <Link to="/dashboard" className="btn-glass text-sm py-2 px-4">
-                                My Page
-                            </Link>
-                        </div>
-                    ) : (
-                        <button
-                            onClick={onLoginClick}
-                            className="hidden sm:flex btn-glass text-sm py-2 px-4"
-                        >
-                            Log In
-                        </button>
-                    )}
-
-                    {/* Hamburger Menu - Mobile */}
+                    {/* Mobile: Hamburger */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="lg:hidden flex flex-col items-end gap-1.5 p-2"
@@ -138,7 +136,7 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                         />
                         <motion.span
                             animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
-                            className="w-4 h-[1.5px] bg-white/60 block"
+                            className="w-4 h-[1.5px] bg-white/50 block"
                         />
                         <motion.span
                             animate={{ rotate: isMobileMenuOpen ? -45 : 0, y: isMobileMenuOpen ? -6 : 0 }}
@@ -158,44 +156,62 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                         className="fixed inset-0 z-40 lg:hidden"
                     >
                         <div
-                            className="absolute inset-0 bg-void/95 backdrop-blur-2xl"
+                            className="absolute inset-0 bg-[#0a0f1a]/98 backdrop-blur-2xl"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         <motion.nav
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
-                            className="absolute inset-x-0 top-[80px] flex flex-col items-center gap-8 p-10"
+                            className="absolute inset-x-0 top-20 flex flex-col items-center gap-8 p-12"
                         >
-                            {menuItems.map((item, index) => (
+                            {MENU_ITEMS.map((item, index) => (
                                 <motion.div
-                                    key={item.href}
+                                    key={item.id}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.05 + index * 0.05 }}
                                 >
                                     <Link
                                         to={item.href}
-                                        className={`text-2xl font-serif ${isActive(item.href) ? 'text-white' : 'text-white/60'} hover:text-white transition-colors`}
+                                        className={`text-2xl font-serif tracking-wide ${isActive(item.href) ? 'text-white' : 'text-white/50'} hover:text-white transition-colors`}
                                     >
                                         {item.label}
                                     </Link>
                                 </motion.div>
                             ))}
 
+                            {/* Language Toggle - Mobile */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="mt-6"
+                                className="flex items-center gap-4 mt-6 pt-6 border-t border-white/10"
+                            >
+                                <button
+                                    onClick={toggleLanguage}
+                                    className="text-sm font-sans text-white/40 hover:text-white transition-colors"
+                                >
+                                    {language === 'ko' ? 'Switch to English' : '한국어로 변경'}
+                                </button>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.25 }}
+                                className="mt-4"
                             >
                                 {isLoggedIn ? (
-                                    <Link to="/dashboard" className="btn-glass">
+                                    <Link to="/dashboard" className="btn-glass text-sm py-3 px-8 font-sans">
                                         My Page
                                     </Link>
                                 ) : (
-                                    <button onClick={() => { setIsMobileMenuOpen(false); onLoginClick(); }} className="btn-glass">
-                                        Log In
+                                    <button
+                                        onClick={() => { setIsMobileMenuOpen(false); onLoginClick(); }}
+                                        className="btn-glass text-sm py-3 px-8 font-sans"
+                                    >
+                                        Login
                                     </button>
                                 )}
                             </motion.div>

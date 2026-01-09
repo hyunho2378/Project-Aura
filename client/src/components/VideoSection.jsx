@@ -2,9 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 /**
- * Video Section
- * 
- * Full-width cinematic brand film placeholder with glass overlay
+ * Video Section - Unified background theme
  */
 export default function VideoSection() {
     const containerRef = useRef(null);
@@ -15,22 +13,23 @@ export default function VideoSection() {
     });
 
     const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.3], [0.9, 1]);
+    const scale = useTransform(scrollYProgress, [0, 0.3], [0.95, 1]);
 
     return (
         <section
             ref={containerRef}
-            className="relative py-32 px-6 md:px-12 lg:px-24 bg-void overflow-hidden"
+            className="relative py-24 md:py-32 bg-[#0a0f1a] overflow-hidden"
         >
+            {/* Global Container */}
             <motion.div
-                className="max-w-7xl mx-auto"
+                className="max-w-screen-xl mx-auto px-6 lg:px-16"
                 style={{ opacity, scale }}
             >
                 {/* Video Container */}
-                <div className="relative aspect-video rounded-3xl overflow-hidden bg-void-lighter">
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#0d1220]">
                     {/* Video Placeholder */}
                     <div className="absolute inset-0">
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-pink-500/20" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/15 via-blue-500/8 to-pink-500/15" />
 
                         {/* Animated Grain */}
                         <div
@@ -42,14 +41,16 @@ export default function VideoSection() {
                     </div>
 
                     {/* Glass Overlay */}
-                    <div className="absolute inset-0 bg-void/40 backdrop-blur-sm" />
+                    <div className="absolute inset-0 bg-[#0a0f1a]/30 backdrop-blur-sm" />
 
                     {/* Play Button */}
                     <div className="absolute inset-0 flex items-center justify-center">
                         <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center group hover:bg-white/20 transition-colors"
+                            className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/5 backdrop-blur-xl 
+                                       border border-white/10 flex items-center justify-center 
+                                       hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                         >
                             <svg
                                 className="w-8 h-8 md:w-10 md:h-10 text-white ml-1"
@@ -63,7 +64,7 @@ export default function VideoSection() {
 
                     {/* Caption */}
                     <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
-                        <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-1">
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-1 font-sans">
                             Brand Film
                         </p>
                         <h3 className="font-serif text-xl md:text-2xl text-white">
@@ -74,13 +75,13 @@ export default function VideoSection() {
 
                 {/* Text Below */}
                 <motion.div
-                    className="mt-16 text-center max-w-2xl mx-auto"
+                    className="mt-16 text-left max-w-2xl"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
                 >
-                    <p className="text-lg md:text-xl text-white/50 leading-relaxed">
+                    <p className="text-lg md:text-xl text-white/50 leading-relaxed font-sans">
                         Every face tells a story. AURA listens—using advanced AI to decode
                         your skin's unique needs and craft solutions that work for <em className="text-white/70 not-italic">you</em>.
                     </p>

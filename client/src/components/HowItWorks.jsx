@@ -1,151 +1,156 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 /**
- * How It Works Section
+ * Process Steps Data - Exact content as specified
+ */
+const PROCESS_STEPS = [
+    {
+        id: 1,
+        titleEn: "Capture Reality",
+        descKo: "초정밀 AI 스캐닝으로 당신의 피부 텍스처와 빛을 있는 그대로 포착합니다.",
+        icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+            </svg>
+        ),
+    },
+    {
+        id: 2,
+        titleEn: "Deep Analysis",
+        descKo: "6가지 핵심 지표를 입체적으로 분석하여 데이터 기반의 고유한 '아우라 타입'을 도출합니다.",
+        icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <path d="M12 18v-6" />
+                <path d="M8 18v-1" />
+                <path d="M16 18v-3" />
+            </svg>
+        ),
+    },
+    {
+        id: 3,
+        titleEn: "Curated Ritual",
+        descKo: "단순한 제품 추천을 넘어, 당신의 라이프스타일에 스며드는 최적의 뷰티 리추얼을 설계합니다.",
+        icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+            </svg>
+        ),
+    },
+    {
+        id: 4,
+        titleEn: "Continuous Glow",
+        descKo: "변화하는 피부 컨디션을 지속적으로 트래킹하며, 어제보다 더 나은 당신의 빛을 완성합니다.",
+        icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M3 3v18h18" />
+                <path d="m19 9-5 5-4-4-3 3" />
+            </svg>
+        ),
+    },
+];
+
+/**
+ * HowItWorks Component - Process Section
  * 
- * Horizontal scroll showcasing the diagnosis process
+ * Hover Interaction:
+ * - Default: Step Number, Icon, English Title (Serif)
+ * - Hover: Fade in Korean Description (Sans-serif) with duration-500
  */
 export default function HowItWorks() {
-    const containerRef = useRef(null);
-
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
-
-    const x = useTransform(scrollYProgress, [0.2, 0.8], ["10%", "-40%"]);
-
-    const steps = [
-        {
-            number: "01",
-            title: "Capture",
-            description: "Take a quick photo using our AI-powered skin scanner.",
-            icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                </svg>
-            ),
-            color: "from-purple-500/20 to-blue-500/20"
-        },
-        {
-            number: "02",
-            title: "Analyze",
-            description: "Our AI maps 6 key skin dimensions to determine your unique Aura Type.",
-            icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 15.5m14.8-.2l-.975 5.556a2.25 2.25 0 01-2.218 1.894H7.393a2.25 2.25 0 01-2.218-1.894L4.2 15.3" />
-                </svg>
-            ),
-            color: "from-blue-500/20 to-teal-500/20"
-        },
-        {
-            number: "03",
-            title: "Prescribe",
-            description: "Receive a personalized product routine tailored to your exact needs.",
-            icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-                </svg>
-            ),
-            color: "from-teal-500/20 to-green-500/20"
-        },
-        {
-            number: "04",
-            title: "Transform",
-            description: "Track your skin's evolution and refine your routine over time.",
-            icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
-                </svg>
-            ),
-            color: "from-pink-500/20 to-purple-500/20"
-        }
-    ];
-
     return (
-        <section
-            ref={containerRef}
-            className="relative h-[150vh] bg-void"
-        >
-            {/* Sticky Container */}
-            <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-                {/* Header */}
-                <div className="px-6 md:px-12 lg:px-24 mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                    >
-                        <p className="text-sm uppercase tracking-[0.3em] text-white/50 mb-3">
-                            The Process
-                        </p>
-                        <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-white">
-                            How It Works
-                        </h2>
-                    </motion.div>
-                </div>
+        <section className="relative py-24 md:py-32 overflow-hidden bg-[#0a0f1a]">
+            {/* Ambient Background */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                                w-[900px] h-[500px] bg-gradient-to-r from-purple-500/8 via-blue-500/5 to-pink-500/8 
+                                blur-3xl opacity-60" />
+            </div>
 
-                {/* Horizontal Scroll */}
+            {/* Global Container */}
+            <div className="relative max-w-screen-xl mx-auto px-6 lg:px-16">
+
+                {/* Section Header */}
                 <motion.div
-                    className="flex gap-6 md:gap-8 pl-6 md:pl-12 lg:pl-24"
-                    style={{ x }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    transition={{ duration: 0.8 }}
+                    className="text-left mb-16 md:mb-20"
                 >
-                    {steps.map((step, index) => (
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-white/40 font-sans mb-4">
+                        How It Works
+                    </p>
+                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+                        Your Journey to<br />
+                        <span className="text-gradient-purple">Radiant Aura</span>
+                    </h2>
+                </motion.div>
+
+                {/* Process Cards Grid - 4 Columns */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {PROCESS_STEPS.map((step, index) => (
                         <motion.div
-                            key={step.number}
+                            key={step.id}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="flex-shrink-0 w-[320px] md:w-[380px]"
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
+                            className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] 
+                                       rounded-2xl p-8 md:p-10 min-h-[320px] md:min-h-[360px]
+                                       hover:bg-white/[0.06] hover:border-white/[0.12]
+                                       transition-all duration-500 cursor-default"
                         >
-                            <div className={`
-                h-[400px] p-8 rounded-3xl
-                bg-gradient-to-br ${step.color}
-                border border-white/[0.08]
-                flex flex-col
-                hover:border-white/[0.15] transition-colors duration-500
-              `}>
-                                {/* Number */}
-                                <span className="text-sm text-white/40 font-medium mb-auto">
-                                    {step.number}
+                            {/* Step Number & Icon Row */}
+                            <div className="flex items-start justify-between mb-8">
+                                <span className="text-[11px] font-sans text-white/25 tracking-[0.15em]">
+                                    {String(step.id).padStart(2, '0')}
                                 </span>
-
-                                {/* Icon */}
-                                <div className="text-white/60 mb-6">
+                                <div className="text-white/30 group-hover:text-purple-400/80 transition-colors duration-500">
                                     {step.icon}
                                 </div>
-
-                                {/* Content */}
-                                <div>
-                                    <h3 className="font-sans text-2xl font-medium text-white mb-3">
-                                        {step.title}
-                                    </h3>
-                                    <p className="text-white/50 leading-relaxed">
-                                        {step.description}
-                                    </p>
-                                </div>
                             </div>
+
+                            {/* Title - English Serif */}
+                            <h3 className="font-serif text-xl md:text-2xl text-white mb-6 leading-tight">
+                                {step.titleEn}
+                            </h3>
+
+                            {/* Description - Korean Sans-serif (Hidden by default, fade in on hover) */}
+                            <p className="font-sans text-sm text-white/0 leading-relaxed
+                                          group-hover:text-white/60
+                                          transition-all duration-500 ease-out">
+                                {step.descKo}
+                            </p>
+
+                            {/* Decorative Line */}
+                            <div className="absolute bottom-8 left-8 right-8 h-[1px] 
+                                            bg-gradient-to-r from-purple-500/0 via-purple-500/30 to-purple-500/0 
+                                            scale-x-0 group-hover:scale-x-100
+                                            transition-transform duration-500 origin-left" />
                         </motion.div>
                     ))}
+                </div>
 
-                    {/* CTA Card */}
-                    <div className="flex-shrink-0 w-[280px] h-[400px] flex items-center justify-center">
-                        <a
-                            href="/diagnosis"
-                            className="flex flex-col items-center gap-4 text-white/40 hover:text-white transition-colors group"
-                        >
-                            <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/50 group-hover:bg-white/5 transition-all">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                                </svg>
-                            </div>
-                            <span className="text-sm uppercase tracking-wider">Start Now</span>
-                        </a>
-                    </div>
+                {/* Bottom CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="text-center mt-16"
+                >
+                    <a
+                        href="/analysis"
+                        className="btn-primary inline-flex items-center gap-3"
+                    >
+                        <span className="font-sans text-sm tracking-wide">Start Your Analysis</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
                 </motion.div>
             </div>
         </section>

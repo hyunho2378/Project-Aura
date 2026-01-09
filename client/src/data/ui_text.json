@@ -1,0 +1,143 @@
+{
+    "meta": {
+        "project": "AURA",
+        "version": "3.0 (High-End Ver)",
+        "description": "Multi-language UI Text System"
+    },
+    "navigation": {
+        "logo": "AURA",
+        "menu": {
+            "aura": {
+                "ko": "AURA",
+                "en": "AURA"
+            },
+            "analysis": {
+                "ko": "Analysis",
+                "en": "Analysis"
+            },
+            "curations": {
+                "ko": "Curations",
+                "en": "Curations"
+            },
+            "shop": {
+                "ko": "Shop",
+                "en": "Shop"
+            }
+        },
+        "auth": {
+            "login": {
+                "ko": "Log In",
+                "en": "Log In"
+            },
+            "myPage": {
+                "ko": "My Page",
+                "en": "My Page"
+            },
+            "logout": {
+                "ko": "Log Out",
+                "en": "Log Out"
+            }
+        },
+        "language": {
+            "ko": "한국어",
+            "en": "English"
+        }
+    },
+    "hero": {
+        "tagline": {
+            "ko": "데이터로 빚어내는 아름다움",
+            "en": "Sculpting Beauty with Your Data."
+        },
+        "subtitle": {
+            "ko": "AI 피부 분석으로 당신만의 오라를 찾아보세요.",
+            "en": "Discover your unique aura through AI skin analysis."
+        },
+        "cta": {
+            "ko": "분석 시작하기",
+            "en": "Start Analysis"
+        }
+    },
+    "analysis": {
+        "title": {
+            "ko": "AI 피부 분석",
+            "en": "AI Skin Analysis"
+        },
+        "subtitle": {
+            "ko": "당신의 피부 오라를 발견하세요",
+            "en": "Discover Your Skin Aura"
+        },
+        "description": {
+            "ko": "10가지 질문을 통해 당신만의 피부 타입과 맞춤형 케어 솔루션을 찾아보세요.",
+            "en": "Find your unique skin type and personalized care solution through 10 questions."
+        },
+        "startButton": {
+            "ko": "분석 시작",
+            "en": "Start Analysis"
+        },
+        "duration": {
+            "ko": "약 2-3분 소요",
+            "en": "Takes about 2-3 minutes"
+        },
+        "progress": {
+            "ko": "질문",
+            "en": "Question"
+        },
+        "result": {
+            "title": {
+                "ko": "당신의 피부 오라",
+                "en": "Your Skin Aura"
+            },
+            "viewProducts": {
+                "ko": "맞춤 제품 보기",
+                "en": "View Curated Products"
+            },
+            "retake": {
+                "ko": "다시 분석하기",
+                "en": "Retake Analysis"
+            }
+        }
+    },
+    "common": {
+        "loading": {
+            "ko": "로딩 중...",
+            "en": "Loading..."
+        },
+        "error": {
+            "ko": "오류가 발생했습니다",
+            "en": "An error occurred"
+        },
+        "back": {
+            "ko": "뒤로",
+            "en": "Back"
+        },
+        "next": {
+            "ko": "다음",
+            "en": "Next"
+        },
+        "submit": {
+            "ko": "제출",
+            "en": "Submit"
+        },
+        "cancel": {
+            "ko": "취소",
+            "en": "Cancel"
+        }
+    },
+    "footer": {
+        "copyright": "© 2026 Team DYT. All Rights Reserved.",
+        "links": {
+            "privacy": {
+                "ko": "개인정보처리방침",
+                "en": "Privacy Policy"
+            },
+            "terms": {
+                "ko": "이용약관",
+                "en": "Terms of Service"
+            },
+            "contact": {
+                "ko": "문의하기",
+                "en": "Contact"
+            }
+        }
+    }
+}
