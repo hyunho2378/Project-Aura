@@ -1,0 +1,528 @@
+/* Tailwind CSS Directives - REQUIRED */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Pretendard:wght@300;400;500;600;700&display=swap');
+
+/* ============================================
+   AURA Design System - Lighter & Atmospheric
+   ============================================ */
+
+:root {
+    /* Core Colors - Mystic & Airy */
+    --void: #0f172a;
+    --void-lighter: #1e1b4b;
+    --void-surface: #312e81;
+
+    /* Aurora Accent Colors - Enhanced Visibility */
+    --aurora-pink: rgba(236, 72, 153, 0.2);
+    --aurora-purple: rgba(120, 119, 198, 0.3);
+    --aurora-blue: rgba(99, 102, 241, 0.15);
+    --aurora-teal: rgba(45, 212, 191, 0.12);
+
+    /* Glass - Brighter */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-bg-hover: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border-hover: rgba(255, 255, 255, 0.3);
+    --glass-glow: rgba(255, 255, 255, 0.08);
+
+    /* Typography */
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+/* ============================================
+   Base & Aurora Background
+   ============================================ */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: linear-gradient(to bottom, #0f172a, #1e1b4b);
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Aurora Background - Mystic & Airy with Light from Above */
+#root {
+    min-height: 100vh;
+    position: relative;
+    background:
+        /* Primary Light from Above - Aurora Glow */
+        radial-gradient(circle at 50% 0%, rgba(120, 119, 198, 0.35), transparent 60%),
+        /* Secondary Ambient Glows */
+        radial-gradient(ellipse 70% 40% at 30% 20%, var(--aurora-purple), transparent),
+        radial-gradient(ellipse 60% 35% at 70% 15%, var(--aurora-blue), transparent),
+        radial-gradient(ellipse 50% 40% at 50% 70%, var(--aurora-pink), transparent),
+        radial-gradient(ellipse 40% 30% at 80% 85%, var(--aurora-teal), transparent),
+        /* Base Gradient - Slate to Deep Indigo */
+        linear-gradient(to bottom, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+
+.font-serif {
+    font-family: var(--font-serif);
+}
+
+.font-sans {
+    font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* ============================================
+   Glassmorphism System - Enhanced
+   ============================================ */
+
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 0 0 30px rgba(255, 255, 255, 0.05),
+        0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.05),
+        0 8px 32px rgba(31, 38, 135, 0.37);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 0 30px rgba(255, 255, 255, 0.08),
+        0 15px 45px rgba(31, 38, 135, 0.45),
+        0 0 50px rgba(120, 119, 198, 0.15);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--void);
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 20px rgba(255, 255, 255, 0.15),
+        0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+        0 8px 30px rgba(255, 255, 255, 0.2),
+        0 0 60px rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(168, 85, 247, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-social:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+
+.nav-link {
+    position: relative;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, #a855f7, #3b82f6);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   Form Elements
+   ============================================ */
+
+.input-minimal {
+    width: 100%;
+    padding: 16px 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-minimal::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.input-minimal:focus {
+    border-color: rgba(168, 85, 247, 0.6);
+}
+
+.input-glass {
+    width: 100%;
+    padding: 16px 20px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-glass::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.input-glass:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
+}
+
+/* ============================================
+   Modal
+   ============================================ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 48px 40px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 50px 100px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   Ambient Glows (Aurora Effect)
+   ============================================ */
+
+.ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    opacity: 0.6;
+    animation: aurora-float 20s ease-in-out infinite;
+}
+
+.ambient-glow-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+    top: -200px;
+    right: -100px;
+    animation-delay: 0s;
+}
+
+.ambient-glow-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    bottom: -150px;
+    left: -100px;
+    animation-delay: -10s;
+}
+
+.ambient-glow-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+    top: 40%;
+    left: 30%;
+    animation-delay: -5s;
+}
+
+@keyframes aurora-float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.5;
+    }
+
+    25% {
+        transform: translate(30px, -20px) scale(1.05);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-20px, 30px) scale(0.95);
+        opacity: 0.4;
+    }
+
+    75% {
+        transform: translate(20px, 20px) scale(1.02);
+        opacity: 0.55;
+    }
+}
+
+/* ============================================
+   AI Match Score Animation
+   ============================================ */
+
+.match-score-ring {
+    stroke-dasharray: 314;
+    stroke-dashoffset: 314;
+    animation: score-fill 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+}
+
+@keyframes score-fill {
+    to {
+        stroke-dashoffset: calc(314 - (314 * var(--score)) / 100);
+    }
+}
+
+.match-score-glow {
+    animation: score-glow 2s ease-out forwards;
+}
+
+@keyframes score-glow {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+
+    50% {
+        opacity: 1;
+        filter: blur(5px);
+    }
+
+    100% {
+        opacity: 0.6;
+        filter: blur(8px);
+    }
+}
+
+/* ============================================
+   Particle Animation
+   ============================================ */
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@keyframes particle-float {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: translate(var(--tx, 20px), var(--ty, -20px));
+        opacity: 0.8;
+    }
+}
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.bg-void {
+    background-color: var(--void);
+}
+
+.bg-void-lighter {
+    background-color: var(--void-lighter);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-purple {
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Selection */
+::selection {
+    background: rgba(168, 85, 247, 0.3);
+    color: #ffffff;
+}
