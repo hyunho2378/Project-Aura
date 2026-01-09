@@ -8,6 +8,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AuthModal from './components/AuthModal';
+import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import Home from './pages/Home';
@@ -24,17 +25,18 @@ import Diagnosis from './pages/Diagnosis';
 
 /**
  * App Layout - Wraps all routes with Header and Footer
+ * Background: Transparent (uses global Deep Navy from #root)
  */
 function AppLayout({ children, onLoginClick, isLoggedIn, onLogout, user }) {
     return (
-        <div className="relative min-h-screen bg-[#0a0f1a]">
+        <div className="relative min-h-screen bg-transparent">
             <Header
                 onLoginClick={onLoginClick}
                 isLoggedIn={isLoggedIn}
                 onLogout={onLogout}
                 user={user}
             />
-            <main>
+            <main className="relative z-10">
                 {children}
             </main>
             <Footer />
@@ -103,14 +105,13 @@ function AppContent() {
                 <Route path="/analysis" element={<AppLayout {...layoutProps}><Diagnosis /></AppLayout>} />
                 <Route path="/diagnosis" element={<AppLayout {...layoutProps}><Diagnosis /></AppLayout>} />
 
-                {/* Curations (new) */}
+                {/* Curations */}
                 <Route path="/curations" element={<AppLayout {...layoutProps}><Curations /></AppLayout>} />
+                <Route path="/curations/:id" element={<AppLayout {...layoutProps}><ProductDetail /></AppLayout>} />
 
                 {/* Shop */}
                 <Route path="/shop" element={<AppLayout {...layoutProps}><Shop /></AppLayout>} />
-
-                {/* Product Detail */}
-                <Route path="/shop/:id" element={<AppLayout {...layoutProps}><ProductDetail user={user} /></AppLayout>} />
+                <Route path="/shop/:id" element={<AppLayout {...layoutProps}><ProductDetail /></AppLayout>} />
 
                 {/* Campaigns */}
                 <Route path="/campaigns" element={<AppLayout {...layoutProps}><Campaigns /></AppLayout>} />
@@ -135,6 +136,7 @@ function App() {
     return (
         <LanguageProvider>
             <Router>
+                <ScrollToTop />
                 <AppContent />
             </Router>
         </LanguageProvider>

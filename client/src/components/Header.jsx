@@ -2,27 +2,22 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { contentData } from '../data/contentData';
 
 /**
- * Navigation Menu Items
+ * Navigation paths mapped to menu items
  */
-const MENU_ITEMS = [
-    { id: 1, label: 'Brand Story', href: '/brand' },
-    { id: 2, label: 'AI Analysis', href: '/analysis' },
-    { id: 3, label: 'Curations', href: '/curations' },
-];
+const MENU_PATHS = ['/brand', '/analysis', '/curations'];
 
 /**
- * Header Component - Global Luxury Beauty Standard
- * 
- * Layout: Logo (Left) | Empty Center | Nav + Utilities (Right)
- * Reference: Aesop, Tamburins, Amorepacific
+ * Header Component - Uses contentData.nav
  */
 export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { language, toggleLanguage } = useLanguage();
     const location = useLocation();
+    const { nav } = contentData;
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -49,7 +44,7 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                     ${isScrolled ? 'bg-[#0a0f1a]/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'}
                 `}
             >
-                {/* Global Container - Shared alignment with content */}
+                {/* Global Container */}
                 <div className="max-w-screen-xl mx-auto px-6 lg:px-16 h-full flex items-center justify-between">
 
                     {/* Left: Logo */}
@@ -57,28 +52,28 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                         to="/"
                         className="font-serif text-xl md:text-2xl font-medium tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
                     >
-                        AURA
+                        {nav.logo}
                     </Link>
 
-                    {/* Center: Empty (for luxury spacing) */}
+                    {/* Center: Empty */}
                     <div className="hidden lg:block flex-1" />
 
                     {/* Right: Navigation + Utilities */}
                     <div className="hidden lg:flex items-center gap-12">
-                        {/* Navigation Links */}
+                        {/* Navigation Links from contentData */}
                         <nav className="flex items-center gap-10">
-                            {MENU_ITEMS.map((item) => (
+                            {nav.menu.map((label, index) => (
                                 <Link
-                                    key={item.id}
-                                    to={item.href}
+                                    key={label}
+                                    to={MENU_PATHS[index]}
                                     className={`
                                         relative text-[13px] tracking-[0.1em] uppercase font-sans
-                                        ${isActive(item.href) ? 'text-white' : 'text-white/50'}
+                                        ${isActive(MENU_PATHS[index]) ? 'text-white' : 'text-white/50'}
                                         hover:text-white transition-colors duration-300
                                     `}
                                 >
-                                    {item.label}
-                                    {isActive(item.href) && (
+                                    {label}
+                                    {isActive(MENU_PATHS[index]) && (
                                         <motion.div
                                             layoutId="nav-underline"
                                             className="absolute -bottom-1 left-0 right-0 h-[1px] bg-white/60"
@@ -91,34 +86,44 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                         {/* Divider */}
                         <div className="w-[1px] h-4 bg-white/10" />
 
-                        {/* Utilities: Language Toggle + Login */}
-                        <div className="flex items-center gap-6">
-                            {/* Language Toggle */}
+                        {/* Utilities */}
+                        <div className="flex items-center gap-5">
+                            {/* Language Toggle - Globe Icon */}
                             <button
                                 onClick={toggleLanguage}
-                                className="flex items-center gap-1.5 text-[12px] tracking-wide font-sans
-                                           text-white/50 hover:text-white transition-colors duration-300"
+                                className="text-white/50 hover:text-white transition-colors duration-300"
                                 aria-label="Toggle Language"
+                                title={language === 'ko' ? 'Switch to English' : '한국어로 변경'}
                             >
-                                <span className={language === 'ko' ? 'text-white' : ''}>KR</span>
-                                <span className="text-white/20">/</span>
-                                <span className={language === 'en' ? 'text-white' : ''}>EN</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="2" y1="12" x2="22" y2="12" />
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                </svg>
                             </button>
 
-                            {/* User Button */}
+                            {/* User Button - User Icon */}
                             {isLoggedIn ? (
                                 <Link
                                     to="/dashboard"
-                                    className="text-[12px] tracking-wide font-sans text-white/50 hover:text-white transition-colors duration-300"
+                                    className="text-white/50 hover:text-white transition-colors duration-300"
+                                    aria-label="My Page"
                                 >
-                                    My Page
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
                                 </Link>
                             ) : (
                                 <button
                                     onClick={onLoginClick}
-                                    className="text-[12px] tracking-wide font-sans text-white/50 hover:text-white transition-colors duration-300"
+                                    className="text-white/50 hover:text-white transition-colors duration-300"
+                                    aria-label="Log In"
                                 >
-                                    Login
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
                                 </button>
                             )}
                         </div>
@@ -165,18 +170,18 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                             exit={{ opacity: 0, y: 20 }}
                             className="absolute inset-x-0 top-20 flex flex-col items-center gap-8 p-12"
                         >
-                            {MENU_ITEMS.map((item, index) => (
+                            {nav.menu.map((label, index) => (
                                 <motion.div
-                                    key={item.id}
+                                    key={label}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.05 + index * 0.05 }}
                                 >
                                     <Link
-                                        to={item.href}
-                                        className={`text-2xl font-serif tracking-wide ${isActive(item.href) ? 'text-white' : 'text-white/50'} hover:text-white transition-colors`}
+                                        to={MENU_PATHS[index]}
+                                        className={`text-2xl font-serif tracking-wide ${isActive(MENU_PATHS[index]) ? 'text-white' : 'text-white/50'} hover:text-white transition-colors`}
                                     >
-                                        {item.label}
+                                        {label}
                                     </Link>
                                 </motion.div>
                             ))}
@@ -211,7 +216,7 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                                         onClick={() => { setIsMobileMenuOpen(false); onLoginClick(); }}
                                         className="btn-glass text-sm py-3 px-8 font-sans"
                                     >
-                                        Login
+                                        {nav.utils[1]}
                                     </button>
                                 )}
                             </motion.div>

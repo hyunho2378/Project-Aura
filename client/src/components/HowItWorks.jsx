@@ -1,74 +1,51 @@
 import { motion } from 'framer-motion';
+import { contentData } from '../data/contentData';
 
 /**
- * Process Steps Data - Exact content as specified
+ * Icons for process steps
  */
-const PROCESS_STEPS = [
-    {
-        id: 1,
-        titleEn: "Capture Reality",
-        descKo: "초정밀 AI 스캐닝으로 당신의 피부 텍스처와 빛을 있는 그대로 포착합니다.",
-        icon: (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                <circle cx="12" cy="13" r="4" />
-            </svg>
-        ),
-    },
-    {
-        id: 2,
-        titleEn: "Deep Analysis",
-        descKo: "6가지 핵심 지표를 입체적으로 분석하여 데이터 기반의 고유한 '아우라 타입'을 도출합니다.",
-        icon: (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                <polyline points="14 2 14 8 20 8" />
-                <path d="M12 18v-6" />
-                <path d="M8 18v-1" />
-                <path d="M16 18v-3" />
-            </svg>
-        ),
-    },
-    {
-        id: 3,
-        titleEn: "Curated Ritual",
-        descKo: "단순한 제품 추천을 넘어, 당신의 라이프스타일에 스며드는 최적의 뷰티 리추얼을 설계합니다.",
-        icon: (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
-            </svg>
-        ),
-    },
-    {
-        id: 4,
-        titleEn: "Continuous Glow",
-        descKo: "변화하는 피부 컨디션을 지속적으로 트래킹하며, 어제보다 더 나은 당신의 빛을 완성합니다.",
-        icon: (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M3 3v18h18" />
-                <path d="m19 9-5 5-4-4-3 3" />
-            </svg>
-        ),
-    },
-];
+const icons = {
+    Camera: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+        </svg>
+    ),
+    Activity: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+            <polyline points="14 2 14 8 20 8" />
+            <path d="M12 18v-6" />
+            <path d="M8 18v-1" />
+            <path d="M16 18v-3" />
+        </svg>
+    ),
+    Sparkles: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+        </svg>
+    ),
+    RefreshCw: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M3 3v18h18" />
+            <path d="m19 9-5 5-4-4-3 3" />
+        </svg>
+    )
+};
 
 /**
- * HowItWorks Component - Process Section
+ * HowItWorks Component
  * 
- * Hover Interaction:
- * - Default: Step Number, Icon, English Title (Serif)
- * - Hover: Fade in Korean Description (Sans-serif) with duration-500
+ * Background: Transparent (uses global Deep Navy)
+ * Typography:
+ * - title: English (Serif font)
+ * - descKR: Korean (Sans-serif font) - DO NOT TRANSLATE
  */
 export default function HowItWorks() {
-    return (
-        <section className="relative py-24 md:py-32 overflow-hidden bg-[#0a0f1a]">
-            {/* Ambient Background */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                                w-[900px] h-[500px] bg-gradient-to-r from-purple-500/8 via-blue-500/5 to-pink-500/8 
-                                blur-3xl opacity-60" />
-            </div>
+    const { processSteps } = contentData;
 
+    return (
+        <section className="relative py-24 md:py-32 overflow-hidden bg-transparent">
             {/* Global Container */}
             <div className="relative max-w-screen-xl mx-auto px-6 lg:px-16">
 
@@ -80,7 +57,7 @@ export default function HowItWorks() {
                     transition={{ duration: 0.8 }}
                     className="text-left mb-16 md:mb-20"
                 >
-                    <p className="text-[11px] uppercase tracking-[0.3em] text-white/40 font-sans mb-4">
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-purple-300/60 font-sans mb-4">
                         How It Works
                     </p>
                     <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
@@ -89,40 +66,41 @@ export default function HowItWorks() {
                     </h2>
                 </motion.div>
 
-                {/* Process Cards Grid - 4 Columns */}
+                {/* Process Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {PROCESS_STEPS.map((step, index) => (
+                    {processSteps.map((step, index) => (
                         <motion.div
                             key={step.id}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] 
+                            className="group relative bg-white/5 backdrop-blur-md border border-white/10 
                                        rounded-2xl p-8 md:p-10 min-h-[320px] md:min-h-[360px]
-                                       hover:bg-white/[0.06] hover:border-white/[0.12]
+                                       hover:bg-white/10 hover:border-purple-500/30
                                        transition-all duration-500 cursor-default"
                         >
-                            {/* Step Number & Icon Row */}
+                            {/* Step Number & Icon */}
                             <div className="flex items-start justify-between mb-8">
-                                <span className="text-[11px] font-sans text-white/25 tracking-[0.15em]">
+                                <span className="text-[11px] font-sans text-purple-400/60 tracking-[0.15em]">
                                     {String(step.id).padStart(2, '0')}
                                 </span>
                                 <div className="text-white/30 group-hover:text-purple-400/80 transition-colors duration-500">
-                                    {step.icon}
+                                    {icons[step.icon]}
                                 </div>
                             </div>
 
-                            {/* Title - English Serif */}
+                            {/* Title - English (Serif) */}
                             <h3 className="font-serif text-xl md:text-2xl text-white mb-6 leading-tight">
-                                {step.titleEn}
+                                {step.title}
                             </h3>
 
-                            {/* Description - Korean Sans-serif (Hidden by default, fade in on hover) */}
+                            {/* Description - Korean (Sans-serif) - Fade in on hover */}
                             <p className="font-sans text-sm text-white/0 leading-relaxed
                                           group-hover:text-white/60
-                                          transition-all duration-500 ease-out">
-                                {step.descKo}
+                                          transition-all duration-500 ease-out"
+                                style={{ wordBreak: 'keep-all' }}>
+                                {step.descKR}
                             </p>
 
                             {/* Decorative Line */}

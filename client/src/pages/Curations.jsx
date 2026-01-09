@@ -1,113 +1,230 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ALL_PRODUCTS } from '../data/productsData';
 
 /**
- * Sample Curations Data
+ * Get unique categories from products
  */
-const CURATIONS = [
-    {
-        id: 1,
-        title: 'Morning Ritual',
-        subtitle: 'Start your day with radiance',
-        products: 4,
-        image: null
-    },
-    {
-        id: 2,
-        title: 'Night Recovery',
-        subtitle: 'Deep restoration while you sleep',
-        products: 5,
-        image: null
-    },
-    {
-        id: 3,
-        title: 'Hydration Boost',
-        subtitle: 'Essential moisture for dry skin',
-        products: 3,
-        image: null
-    },
-    {
-        id: 4,
-        title: 'Sensitive Care',
-        subtitle: 'Gentle solutions for delicate skin',
-        products: 4,
-        image: null
-    }
-];
+const categories = ["전체 보기", ...new Set(ALL_PRODUCTS.map(p => p.category))];
 
 /**
- * Curations Page - Personalized Collections
+ * Get unique skin types for additional filtering
+ */
+const skinTypes = ["전체", "수부지", "지성", "민감성", "건성", "복합성"];
+
+/**
+ * Items per page for pagination
+ */
+const ITEMS_PER_PAGE = 12;
+
+/**
+ * Curations Page - Product Grid with Pagination
+ * 
+ * Features:
+ * - Skin type filter
+ * - Category filter
+ * - Client-side pagination (12 items per page)
+ * 
+ * Background: Transparent (uses global Deep Navy)
  */
 export default function Curations() {
+    const [activeCategory, setActiveCategory] = useState("전체 보기");
+    const [activeSkinType, setActiveSkinType] = useState("전체");
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Filter products
+    const filteredProducts = ALL_PRODUCTS.filter(p => {
+        const categoryMatch = activeCategory === "전체 보기" || p.category === activeCategory;
+        const skinTypeMatch = activeSkinType === "전체" || p.skinType === activeSkinType;
+        return categoryMatch && skinTypeMatch;
+    });
+
+    // Calculate pagination
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+    // Reset to page 1 when filters change
+    const handleCategoryChange = (category) => {
+        setActiveCategory(category);
+        setCurrentPage(1);
+    };
+
+    const handleSkinTypeChange = (type) => {
+        setActiveSkinType(type);
+        setCurrentPage(1);
+    };
+
+    // Generate page numbers for pagination
+    const getPageNumbers = () => {
+        const pages = [];
+        if (totalPages <= 5) {
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            if (currentPage <= 3) {
+                pages.push(1, 2, 3, 4, '...', totalPages);
+            } else if (currentPage >= totalPages - 2) {
+                pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+            } else {
+                pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+            }
+        }
+        return pages;
+    };
+
     return (
-        <main className="min-h-screen bg-[#0a0f1a] pt-20">
-            {/* Hero Section */}
-            <section className="py-24 md:py-32">
+        <main className="min-h-screen bg-transparent pt-20 relative z-10">
+            {/* Header Section */}
+            <section className="py-12 md:py-16">
                 <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl"
+                        className="max-w-2xl"
                     >
-                        <p className="text-[11px] uppercase tracking-[0.3em] text-white/40 font-sans mb-4">
+                        <p className="text-[11px] uppercase tracking-[0.3em] text-purple-300/60 font-sans mb-4">
                             Curated For You
                         </p>
-                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-8">
+                        <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-4">
                             Rituals Designed<br />
                             <span className="text-gradient-purple">For Your Skin</span>
                         </h1>
-                        <p className="font-sans text-lg md:text-xl text-white/50 leading-relaxed">
-                            Discover expertly curated collections tailored to your unique skin needs.
-                            Each ritual combines science and soul for optimal results.
+                        <p className="font-sans text-base text-white/50 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                            전문적으로 큐레이션 된 50가지 컬렉션을 만나보세요. 당신의 피부 타입에 맞춰 설계된 리추얼입니다.
                         </p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* Curations Grid */}
-            <section className="py-16 border-t border-white/5">
+            {/* Skin Type Filter */}
+            <section className="pb-4">
                 <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {CURATIONS.map((curation, index) => (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="flex flex-wrap items-center gap-2 mb-4"
+                    >
+                        <span className="text-xs text-white/40 font-sans mr-2">피부 타입:</span>
+                        {skinTypes.map((type) => (
+                            <button
+                                key={type}
+                                onClick={() => handleSkinTypeChange(type)}
+                                className={`
+                                    px-3 py-1.5 rounded-full text-xs font-sans tracking-wide
+                                    transition-all duration-300
+                                    ${activeSkinType === type
+                                        ? 'bg-purple-500 text-white'
+                                        : 'bg-white/5 text-white/50 hover:text-white hover:bg-white/10'
+                                    }
+                                `}
+                            >
+                                {type}
+                            </button>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Category Filter Bar */}
+            <section className="pb-6">
+                <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="flex flex-wrap gap-2"
+                    >
+                        {categories.map((category) => (
+                            <button
+                                key={category}
+                                onClick={() => handleCategoryChange(category)}
+                                className={`
+                                    px-4 py-2 rounded-full text-sm font-sans tracking-wide
+                                    transition-all duration-300 border
+                                    ${activeCategory === category
+                                        ? 'bg-white text-[#0a0f29] border-white'
+                                        : 'bg-white/5 text-white/60 border-white/10 hover:border-white/30 hover:text-white backdrop-blur-sm'
+                                    }
+                                `}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Results Count */}
+            <section className="pb-4">
+                <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
+                    <p className="text-sm text-white/40 font-sans">
+                        {filteredProducts.length}개의 제품 중 {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} 표시
+                    </p>
+                </div>
+            </section>
+
+            {/* Product Grid */}
+            <section className="py-8">
+                <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                        {paginatedProducts.map((product, index) => (
                             <motion.div
-                                key={curation.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
+                                key={product.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, delay: index * 0.03 }}
                             >
                                 <Link
-                                    to={`/curations/${curation.id}`}
-                                    className="group block relative bg-white/[0.03] border border-white/[0.06] 
-                                               rounded-2xl p-8 md:p-10 min-h-[280px]
-                                               hover:bg-white/[0.06] hover:border-white/[0.12]
-                                               transition-all duration-500"
+                                    to={`/curations/${product.id}`}
+                                    className="group block"
                                 >
-                                    {/* Badge */}
-                                    <span className="text-[10px] uppercase tracking-[0.15em] text-white/30 font-sans">
-                                        {curation.products} Products
-                                    </span>
+                                    {/* Card - Glassmorphism */}
+                                    <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden
+                                                    hover:bg-white/10 hover:border-purple-500/30 transition-all duration-500">
 
-                                    {/* Title */}
-                                    <h3 className="font-serif text-2xl md:text-3xl text-white mt-4 mb-3
-                                                   group-hover:text-gradient transition-colors duration-300">
-                                        {curation.title}
-                                    </h3>
+                                        {/* Tag */}
+                                        {product.tag && (
+                                            <div className="absolute top-3 left-3 z-10">
+                                                <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-sans
+                                                               bg-white/10 backdrop-blur-sm text-white/80 rounded-full">
+                                                    {product.tag}
+                                                </span>
+                                            </div>
+                                        )}
 
-                                    {/* Subtitle */}
-                                    <p className="font-sans text-sm text-white/50 leading-relaxed">
-                                        {curation.subtitle}
-                                    </p>
+                                        {/* Skin Type Badge */}
+                                        <div className="absolute top-3 right-3 z-10">
+                                            <span className="px-2 py-0.5 text-[9px] font-sans text-purple-300/80 bg-purple-500/20 rounded-full">
+                                                {product.skinType}
+                                            </span>
+                                        </div>
 
-                                    {/* Arrow */}
-                                    <div className="absolute bottom-8 right-8 w-10 h-10 rounded-full 
-                                                    bg-white/[0.05] flex items-center justify-center
-                                                    group-hover:bg-white/[0.1] transition-colors duration-300">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" strokeWidth="1.5" className="text-white/50">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
+                                        {/* Image Area */}
+                                        <div className={`aspect-[4/5] ${product.imageColor} relative overflow-hidden`}>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f29]/50 to-transparent" />
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="p-4">
+                                            <p className="text-[9px] uppercase tracking-[0.15em] text-white/30 font-sans mb-1">
+                                                {product.category}
+                                            </p>
+                                            <h3 className="font-serif text-sm text-white mb-1 group-hover:text-purple-300 transition-colors line-clamp-1">
+                                                {product.name}
+                                            </h3>
+                                            <p className="font-sans text-xs text-white/60 mb-2">
+                                                {product.price}
+                                            </p>
+                                            <p className="font-sans text-[11px] text-white/40 leading-relaxed line-clamp-2" style={{ wordBreak: 'keep-all' }}>
+                                                {product.desc}
+                                            </p>
+                                        </div>
                                     </div>
                                 </Link>
                             </motion.div>
@@ -116,27 +233,67 @@ export default function Curations() {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-24 border-t border-white/5">
-                <div className="max-w-screen-xl mx-auto px-6 lg:px-16 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <h2 className="font-serif text-2xl md:text-3xl text-white mb-4">
-                            Not sure where to start?
-                        </h2>
-                        <p className="font-sans text-white/50 mb-8">
-                            Take our AI-powered skin analysis to discover your perfect ritual.
-                        </p>
-                        <a href="/analysis" className="btn-primary inline-flex items-center gap-3">
-                            <span className="font-sans text-sm tracking-wide">Start Analysis</span>
-                        </a>
-                    </motion.div>
-                </div>
-            </section>
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <section className="py-8 pb-24">
+                    <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="flex items-center justify-center gap-2"
+                        >
+                            {/* Previous Button */}
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
+                                    ${currentPage === 1
+                                        ? 'text-white/20 cursor-not-allowed'
+                                        : 'text-white/60 hover:text-white hover:bg-white/10'
+                                    }`}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+
+                            {/* Page Numbers */}
+                            {getPageNumbers().map((page, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => typeof page === 'number' && setCurrentPage(page)}
+                                    disabled={page === '...'}
+                                    className={`min-w-[40px] h-10 rounded-full flex items-center justify-center font-sans text-sm transition-all duration-300
+                                        ${page === currentPage
+                                            ? 'bg-white text-[#0a0f29] font-bold'
+                                            : page === '...'
+                                                ? 'text-white/40 cursor-default'
+                                                : 'text-white/50 hover:text-white hover:bg-white/10'
+                                        }`}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+
+                            {/* Next Button */}
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
+                                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
+                                    ${currentPage === totalPages
+                                        ? 'text-white/20 cursor-not-allowed'
+                                        : 'text-white/60 hover:text-white hover:bg-white/10'
+                                    }`}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
+                        </motion.div>
+                    </div>
+                </section>
+            )}
         </main>
     );
 }

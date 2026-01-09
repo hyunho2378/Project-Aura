@@ -53,7 +53,7 @@ html {
 
 body {
     font-family: var(--font-sans);
-    background: linear-gradient(to bottom, #0f172a, #1e1b4b);
+    background: #0a0f29;
     color: #ffffff;
     line-height: 1.6;
     overflow-x: hidden;
@@ -61,20 +61,32 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Aurora Background - Mystic & Airy with Light from Above */
+/* Global Background with Fixed Ambient Glows */
 #root {
     min-height: 100vh;
     position: relative;
+    background: #0a0f29;
+}
+
+/* Fixed Position Ambient Glows - Always visible behind content */
+#root::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
     background:
-        /* Primary Light from Above - Aurora Glow */
-        radial-gradient(circle at 50% 0%, rgba(120, 119, 198, 0.35), transparent 60%),
-        /* Secondary Ambient Glows */
-        radial-gradient(ellipse 70% 40% at 30% 20%, var(--aurora-purple), transparent),
-        radial-gradient(ellipse 60% 35% at 70% 15%, var(--aurora-blue), transparent),
-        radial-gradient(ellipse 50% 40% at 50% 70%, var(--aurora-pink), transparent),
-        radial-gradient(ellipse 40% 30% at 80% 85%, var(--aurora-teal), transparent),
-        /* Base Gradient - Slate to Deep Indigo */
-        linear-gradient(to bottom, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+        /* Top Center Glow - Primary */
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120, 119, 198, 0.15), transparent 60%),
+        /* Left Side Glow */
+        radial-gradient(ellipse 50% 60% at 10% 30%, rgba(99, 102, 241, 0.08), transparent),
+        /* Right Side Glow */
+        radial-gradient(ellipse 50% 60% at 90% 60%, rgba(168, 85, 247, 0.08), transparent),
+        /* Bottom Glow */
+        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(236, 72, 153, 0.06), transparent);
 }
 
 /* ============================================

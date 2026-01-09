@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Environment } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { contentData } from '../data/contentData';
 
 /**
  * CosmeticBottle - 3D Glass Bottle (Right side)
@@ -98,10 +99,12 @@ function Scene() {
 }
 
 /**
- * Hero3D - Left-aligned text with global container
+ * Hero3D - Uses contentData.hero for text content
+ * Background: Transparent (uses global Deep Navy)
  */
 export default function Hero3D() {
     const navigate = useNavigate();
+    const { hero } = contentData;
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -121,13 +124,7 @@ export default function Hero3D() {
     };
 
     return (
-        <section className="relative w-full h-screen overflow-hidden bg-[#0a0f1a]">
-            {/* Ambient Background */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="ambient-glow ambient-glow-1" />
-                <div className="ambient-glow ambient-glow-2" />
-            </div>
-
+        <section className="relative w-full h-screen overflow-hidden bg-transparent">
             {/* 3D Canvas - Right side */}
             <div className="absolute inset-0 z-10">
                 <Canvas
@@ -148,43 +145,36 @@ export default function Hero3D() {
                     initial="hidden"
                     animate="visible"
                 >
-                    {/* Headline */}
+                    {/* Title - English (Serif) */}
                     <motion.h1
                         variants={itemVariants}
                         className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05] mb-6 text-left"
                     >
-                        Sculpting Beauty
-                        <br />
-                        <span className="italic font-normal text-white/90">with Your Data.</span>
+                        {hero.title}
                     </motion.h1>
 
-                    {/* Subtext */}
+                    {/* Subtitle - Korean (Sans-serif) */}
                     <motion.p
                         variants={itemVariants}
-                        className="font-sans text-base md:text-lg text-white/50 max-w-md mb-10 text-left leading-relaxed"
+                        className="font-sans text-base md:text-lg text-white/50 max-w-md mb-10 text-left leading-relaxed whitespace-pre-line"
+                        style={{ wordBreak: 'keep-all' }}
                     >
-                        Experience the hyper-personalized wellness solution.
+                        {hero.subtitle}
                     </motion.p>
 
-                    {/* CTA Buttons */}
+                    {/* CTA Button */}
                     <motion.div variants={itemVariants} className="flex gap-4 pointer-events-auto">
                         <button
                             onClick={() => navigate('/analysis')}
                             className="btn-primary"
                         >
-                            <span>Start Analysis</span>
-                        </button>
-                        <button
-                            onClick={() => navigate('/curations')}
-                            className="btn-glass"
-                        >
-                            Explore Curations
+                            <span>{hero.cta}</span>
                         </button>
                     </motion.div>
                 </motion.div>
             </div>
 
-            {/* Scroll Indicator - Aligned with container */}
+            {/* Scroll Indicator */}
             <motion.div
                 className="absolute bottom-8 z-20 max-w-screen-xl mx-auto px-6 lg:px-16 left-0 right-0"
                 initial={{ opacity: 0 }}
