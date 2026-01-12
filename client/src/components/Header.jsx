@@ -40,8 +40,8 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout, user }) {
                 className={`
                     fixed top-0 left-0 right-0 z-50
                     h-16 md:h-20
-                    transition-all duration-500
-                    ${isScrolled ? 'bg-[#0a0f1a]/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'}
+                    transition-all duration-300
+                    ${isScrolled ? 'bg-black/95 border-b border-white/5' : 'bg-transparent'}
                 `}
             >
                 {/* Global Container */}

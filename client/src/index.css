@@ -7,27 +7,33 @@
 @tailwind utilities;
 
 /* ============================================
-   AURA Design System - Lighter & Atmospheric
+   AURA Design System - LUXURY TECH AESTHETIC
+   Pure Black + Spotlight Gradients
+   NO PURPLE - ONLY Cyan (#3C7795) and Mist (#8AAEC0)
    ============================================ */
 
 :root {
-    /* Core Colors - Mystic & Airy */
-    --void: #0f172a;
-    --void-lighter: #1e1b4b;
-    --void-surface: #312e81;
+    /* ========================================
+       STRICT COLOR PALETTE (From User Image 4)
+       ======================================== */
 
-    /* Aurora Accent Colors - Enhanced Visibility */
-    --aurora-pink: rgba(236, 72, 153, 0.2);
-    --aurora-purple: rgba(120, 119, 198, 0.3);
-    --aurora-blue: rgba(99, 102, 241, 0.15);
-    --aurora-teal: rgba(45, 212, 191, 0.12);
+    /* Void - Global Background */
+    --void: #000000;
 
-    /* Glass - Brighter */
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-bg-hover: rgba(255, 255, 255, 0.15);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --glass-border-hover: rgba(255, 255, 255, 0.3);
-    --glass-glow: rgba(255, 255, 255, 0.08);
+    /* Surface (Darkest Teal) - Cards */
+    --surface: #082B35;
+
+    /* Deep Accent (Dark Teal) - Gradient Backgrounds */
+    --deep-accent: #1E5672;
+
+    /* Highlight/Glow (Cyan) - Buttons, Icons, Active States */
+    --highlight: #3C7795;
+
+    /* Secondary Text (Mist) - Subtitles, Descriptions */
+    --mist: #8AAEC0;
+
+    /* Pure White - Headings */
+    --white: #FFFFFF;
 
     /* Typography */
     --font-serif: 'Playfair Display', Georgia, serif;
@@ -35,7 +41,7 @@
 }
 
 /* ============================================
-   Base & Aurora Background
+   Base - LUXURY TECH Background
    ============================================ */
 
 *,
@@ -51,42 +57,20 @@ html {
     font-size: 16px;
 }
 
+/* PURE BLACK BACKGROUND - NO GRADIENTS */
 body {
     font-family: var(--font-sans);
-    background: #0a0f29;
-    color: #ffffff;
+    background: #000000;
+    color: var(--white);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global Background with Fixed Ambient Glows */
 #root {
     min-height: 100vh;
     position: relative;
-    background: #0a0f29;
-}
-
-/* Fixed Position Ambient Glows - Always visible behind content */
-#root::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-    background:
-        /* Top Center Glow - Primary */
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120, 119, 198, 0.15), transparent 60%),
-        /* Left Side Glow */
-        radial-gradient(ellipse 50% 60% at 10% 30%, rgba(99, 102, 241, 0.08), transparent),
-        /* Right Side Glow */
-        radial-gradient(ellipse 50% 60% at 90% 60%, rgba(168, 85, 247, 0.08), transparent),
-        /* Bottom Glow */
-        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(236, 72, 153, 0.06), transparent);
 }
 
 /* ============================================
@@ -111,48 +95,40 @@ h6 {
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.1;
+    color: var(--white);
 }
 
 /* ============================================
-   Glassmorphism System - Enhanced
+   CARDS - Luxury Tech Style
    ============================================ */
 
 .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow:
-        inset 0 0 30px rgba(255, 255, 255, 0.05),
-        0 8px 32px rgba(31, 38, 135, 0.37);
+    background: linear-gradient(135deg, #082B35 0%, #000000 100%);
+    border: 1px solid rgba(138, 174, 192, 0.20);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.50);
 }
 
 .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #082B35 0%, #000000 100%);
+    border: 1px solid rgba(138, 174, 192, 0.20);
     border-radius: 24px;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 0 20px rgba(255, 255, 255, 0.05),
-        0 8px 32px rgba(31, 38, 135, 0.37);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        inset 0 1px 0 rgba(255, 255, 255, 0.03),
+        0 8px 32px rgba(0, 0, 0, 0.50);
+    transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-4px);
+    border-color: rgba(60, 119, 149, 0.50);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 0 30px rgba(255, 255, 255, 0.08),
-        0 15px 45px rgba(31, 38, 135, 0.45),
-        0 0 50px rgba(120, 119, 198, 0.15);
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 12px 40px rgba(0, 0, 0, 0.60),
+        0 0 30px -10px rgba(60, 119, 149, 0.30);
+    transform: translateY(-2px);
 }
 
 /* ============================================
-   Buttons
+   BUTTONS - Cyan Highlight
    ============================================ */
 
 .btn-primary {
@@ -163,38 +139,22 @@ h6 {
     padding: 14px 32px;
     font-family: var(--font-sans);
     font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    color: var(--void);
-    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-    border: none;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    background: linear-gradient(135deg, #1E5672 0%, #3C7795 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50px;
     cursor: pointer;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow:
-        0 4px 20px rgba(255, 255, 255, 0.15),
-        0 0 40px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(60, 119, 149, 0.25);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow:
-        0 8px 30px rgba(255, 255, 255, 0.2),
-        0 0 60px rgba(255, 255, 255, 0.1);
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(168, 85, 247, 0.1) 100%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.btn-primary:hover::before {
-    opacity: 1;
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(60, 119, 149, 0.40);
 }
 
 .btn-glass {
@@ -206,19 +166,18 @@ h6 {
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.02em;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--mist);
+    background: transparent;
+    border: 1px solid rgba(138, 174, 192, 0.20);
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn-glass:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
+    background: rgba(8, 43, 53, 0.50);
+    border-color: rgba(60, 119, 149, 0.50);
+    color: var(--white);
 }
 
 .btn-social {
@@ -230,17 +189,18 @@ h6 {
     padding: 14px 20px;
     font-size: 14px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--mist);
+    background: transparent;
+    border: 1px solid rgba(138, 174, 192, 0.15);
     border-radius: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn-social:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(8, 43, 53, 0.30);
+    border-color: rgba(60, 119, 149, 0.40);
+    color: var(--white);
 }
 
 /* ============================================
@@ -253,14 +213,14 @@ h6 {
     font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--mist);
     text-decoration: none;
     padding: 8px 0;
     transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-    color: rgba(255, 255, 255, 1);
+    color: var(--white);
 }
 
 .nav-link::after {
@@ -270,7 +230,7 @@ h6 {
     left: 0;
     width: 0;
     height: 1px;
-    background: linear-gradient(90deg, #a855f7, #3b82f6);
+    background: linear-gradient(90deg, #1E5672, #3C7795);
     transition: width 0.3s ease;
 }
 
@@ -287,20 +247,20 @@ h6 {
     padding: 16px 0;
     font-family: var(--font-sans);
     font-size: 15px;
-    color: #ffffff;
+    color: var(--white);
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(138, 174, 192, 0.20);
     outline: none;
     transition: border-color 0.3s ease;
 }
 
 .input-minimal::placeholder {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(138, 174, 192, 0.50);
 }
 
 .input-minimal:focus {
-    border-color: rgba(168, 85, 247, 0.6);
+    border-color: var(--highlight);
 }
 
 .input-glass {
@@ -308,22 +268,22 @@ h6 {
     padding: 16px 20px;
     font-family: var(--font-sans);
     font-size: 15px;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    background: rgba(8, 43, 53, 0.30);
+    border: 1px solid rgba(138, 174, 192, 0.20);
     border-radius: 16px;
     outline: none;
     transition: all 0.3s ease;
 }
 
 .input-glass::placeholder {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(138, 174, 192, 0.50);
 }
 
 .input-glass:focus {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(168, 85, 247, 0.5);
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
+    background: rgba(8, 43, 53, 0.50);
+    border-color: var(--highlight);
+    box-shadow: 0 0 20px rgba(60, 119, 149, 0.15);
 }
 
 /* ============================================
@@ -333,8 +293,7 @@ h6 {
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -347,88 +306,23 @@ h6 {
     width: 100%;
     max-width: 420px;
     padding: 48px 40px;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #082B35 0%, #000000 100%);
+    border: 1px solid rgba(138, 174, 192, 0.20);
     border-radius: 32px;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 50px 100px rgba(0, 0, 0, 0.5);
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 50px 100px rgba(0, 0, 0, 0.80);
 }
 
 /* ============================================
-   Ambient Glows (Aurora Effect)
-   ============================================ */
-
-.ambient-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    pointer-events: none;
-    opacity: 0.6;
-    animation: aurora-float 20s ease-in-out infinite;
-}
-
-.ambient-glow-1 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
-    top: -200px;
-    right: -100px;
-    animation-delay: 0s;
-}
-
-.ambient-glow-2 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
-    bottom: -150px;
-    left: -100px;
-    animation-delay: -10s;
-}
-
-.ambient-glow-3 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
-    top: 40%;
-    left: 30%;
-    animation-delay: -5s;
-}
-
-@keyframes aurora-float {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.5;
-    }
-
-    25% {
-        transform: translate(30px, -20px) scale(1.05);
-        opacity: 0.6;
-    }
-
-    50% {
-        transform: translate(-20px, 30px) scale(0.95);
-        opacity: 0.4;
-    }
-
-    75% {
-        transform: translate(20px, 20px) scale(1.02);
-        opacity: 0.55;
-    }
-}
-
-/* ============================================
-   AI Match Score Animation
+   AI Match Score - CYAN Glow
    ============================================ */
 
 .match-score-ring {
     stroke-dasharray: 314;
     stroke-dashoffset: 314;
-    animation: score-fill 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+    animation: score-fill 1.5s ease-out forwards;
+    filter: drop-shadow(0 0 8px rgba(60, 119, 149, 0.50));
 }
 
 @keyframes score-fill {
@@ -437,57 +331,8 @@ h6 {
     }
 }
 
-.match-score-glow {
-    animation: score-glow 2s ease-out forwards;
-}
-
-@keyframes score-glow {
-    0% {
-        opacity: 0;
-        filter: blur(10px);
-    }
-
-    50% {
-        opacity: 1;
-        filter: blur(5px);
-    }
-
-    100% {
-        opacity: 0.6;
-        filter: blur(8px);
-    }
-}
-
 /* ============================================
-   Particle Animation
-   ============================================ */
-
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-@keyframes particle-float {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-        opacity: 0.3;
-    }
-
-    50% {
-        transform: translate(var(--tx, 20px), var(--ty, -20px));
-        opacity: 0.8;
-    }
-}
-
-/* ============================================
-   Scrollbar
+   Scrollbar - Luxury Tech
    ============================================ */
 
 ::-webkit-scrollbar {
@@ -496,39 +341,49 @@ h6 {
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(60, 119, 149, 0.40);
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(60, 119, 149, 0.60);
 }
 
 /* ============================================
-   Utility Classes
+   Utility Classes - NO PURPLE
    ============================================ */
 
 .bg-void {
-    background-color: var(--void);
+    background-color: #000000;
 }
 
-.bg-void-lighter {
-    background-color: var(--void-lighter);
+.bg-surface {
+    background-color: #082B35;
+}
+
+.text-mist {
+    color: var(--mist);
+}
+
+.text-highlight {
+    color: var(--highlight);
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--mist) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.text-gradient-purple {
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+/* REPLACEMENT: text-gradient-purple -> text-gradient-cyan */
+.text-gradient-purple,
+.text-gradient-cyan {
+    background: linear-gradient(135deg, #3C7795 0%, #1E5672 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -536,6 +391,6 @@ h6 {
 
 /* Selection */
 ::selection {
-    background: rgba(168, 85, 247, 0.3);
-    color: #ffffff;
+    background: rgba(60, 119, 149, 0.40);
+    color: var(--white);
 }

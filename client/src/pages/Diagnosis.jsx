@@ -6,12 +6,15 @@ import diagnosisData from '../data/diagnosisData.json';
 /**
  * Diagnosis Page - AI Skin Type Quiz
  * 
- * Features:
- * - 10-question interactive quiz
- * - Smooth animations between questions
- * - Progress indicator
- * - Score calculation logic
- * - Result display with AURA type
+ * LUXURY TECH AESTHETIC - NO PURPLE
+ * 
+ * STRICT PALETTE:
+ * - #000000 (Black - Background)
+ * - #082B35 (Darkest Teal - Surface)
+ * - #1E5672 (Deep Teal - Accent)
+ * - #3C7795 (Cyan - Highlight)
+ * - #8AAEC0 (Mist - Secondary Text)
+ * - #FFFFFF (White - Primary Text)
  */
 export default function Diagnosis() {
     const navigate = useNavigate();
@@ -39,16 +42,13 @@ export default function Diagnosis() {
             const threshold = thresholds[typeKey];
 
             if (!threshold) {
-                // NORMAL is the fallback
                 return results_mapping[typeKey];
             }
 
-            // Check single variable threshold
             if (threshold.variable && scores[threshold.variable] >= threshold.min) {
                 return results_mapping[typeKey];
             }
 
-            // Check dual variable threshold (OILY_DEHYDRATED)
             if (threshold.variable_1 && threshold.variable_2) {
                 if (scores[threshold.variable_1] >= threshold.min_1 &&
                     scores[threshold.variable_2] >= threshold.min_2) {
@@ -56,13 +56,11 @@ export default function Diagnosis() {
                 }
             }
 
-            // Check flag (COMBINATION)
             if (threshold.flag_check && flagCombination === threshold.value) {
                 return results_mapping[typeKey];
             }
         }
 
-        // Default to NORMAL
         return results_mapping['NORMAL'];
     };
 
@@ -95,7 +93,6 @@ export default function Diagnosis() {
         setSelectedOption(index);
         setIsAnimating(true);
 
-        // Update scores
         if (option.score) {
             setScores(prev => {
                 const newScores = { ...prev };
@@ -106,22 +103,18 @@ export default function Diagnosis() {
             });
         }
 
-        // Update combination flag
         if (option.flag_combination !== undefined) {
             setFlagCombination(option.flag_combination);
         }
 
-        // Move to next question or show result
         setTimeout(() => {
             if (currentQuestion < totalQuestions - 1) {
                 setCurrentQuestion(prev => prev + 1);
                 setSelectedOption(null);
             } else {
-                // Calculate and show result
                 const result = calculateResult();
                 setResultType(result);
                 setShowResult(true);
-                // Save to API with current scores (need to calculate final scores here)
                 const finalScores = { ...scores };
                 if (option.score) {
                     Object.entries(option.score).forEach(([key, value]) => {
@@ -145,30 +138,25 @@ export default function Diagnosis() {
         setRecommendedProducts([]);
     };
 
-    // Intro Screen
+    // Intro Screen - CLEAN, NO BLUR ARTIFACTS
     if (!isStarted) {
         return (
             <div className="min-h-screen pt-24 pb-20 px-6 flex flex-col items-center justify-center">
-                {/* Ambient Glow */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] 
-                                    bg-gradient-to-b from-purple-500/20 to-transparent rounded-full blur-3xl" />
-                </div>
-
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     className="relative z-10 max-w-xl text-center"
                 >
-                    <p className="text-xs uppercase tracking-[0.3em] text-purple-400/80 mb-4">
+                    {/* Label - Cyan (NOT purple) */}
+                    <p className="text-xs uppercase tracking-[0.3em] text-[#3C7795] mb-4">
                         AI Skin Diagnosis
                     </p>
                     <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6">
                         Discover Your<br />
-                        <span className="text-gradient-purple">Skin Aura</span>
+                        <span className="text-gradient-cyan">Skin Aura</span>
                     </h1>
-                    <p className="text-white/50 text-lg mb-10 max-w-md mx-auto">
+                    <p className="text-[#8AAEC0] text-lg mb-10 max-w-md mx-auto">
                         10가지 질문을 통해 당신만의 피부 타입과 맞춤형 케어 솔루션을 찾아보세요.
                     </p>
 
@@ -181,7 +169,7 @@ export default function Diagnosis() {
                         Start Diagnosis
                     </motion.button>
 
-                    <p className="text-white/30 text-sm mt-6">
+                    <p className="text-[#8AAEC0]/50 text-sm mt-6">
                         약 2-3분 소요
                     </p>
                 </motion.div>
@@ -189,34 +177,21 @@ export default function Diagnosis() {
         );
     }
 
-    // Result Screen
+    // Result Screen - CLEAN
     if (showResult && resultType) {
         return (
             <div className="min-h-screen pt-24 pb-20 px-6 flex flex-col items-center justify-center">
-                {/* Ambient Glow with result color */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1.5 }}
-                        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl"
-                        style={{
-                            background: `radial-gradient(circle, ${resultType.color}30 0%, transparent 70%)`
-                        }}
-                    />
-                </div>
-
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.3 }}
                     className="relative z-10 max-w-xl text-center"
                 >
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/50 mb-4">
+                    <p className="text-xs uppercase tracking-[0.3em] text-[#8AAEC0]/50 mb-4">
                         Your Skin Aura
                     </p>
 
-                    {/* Aura Badge */}
+                    {/* Aura Badge - Cyan tones */}
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -224,18 +199,13 @@ export default function Diagnosis() {
                         className="relative w-32 h-32 mx-auto mb-8"
                     >
                         <div
-                            className="absolute inset-0 rounded-full animate-pulse"
+                            className="absolute inset-0 rounded-full"
                             style={{
-                                background: `radial-gradient(circle, ${resultType.color}50 0%, transparent 70%)`,
-                                filter: 'blur(20px)'
+                                background: `radial-gradient(circle, rgba(60,119,149,0.30) 0%, transparent 70%)`
                             }}
                         />
                         <div
-                            className="relative w-full h-full rounded-full flex items-center justify-center"
-                            style={{
-                                background: `linear-gradient(135deg, ${resultType.color}40, ${resultType.color}20)`,
-                                border: `2px solid ${resultType.color}60`
-                            }}
+                            className="relative w-full h-full rounded-full flex items-center justify-center bg-gradient-to-br from-[#1E5672] to-[#3C7795] border-2 border-[#3C7795]"
                         >
                             <span className="text-3xl font-serif text-white">
                                 {resultType.aura_keyword.charAt(0)}
@@ -256,8 +226,7 @@ export default function Diagnosis() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.9 }}
-                        className="text-lg mb-4"
-                        style={{ color: resultType.color }}
+                        className="text-lg mb-4 text-[#3C7795]"
                     >
                         {resultType.type_name}
                     </motion.p>
@@ -266,24 +235,24 @@ export default function Diagnosis() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.1 }}
-                        className="text-white/60 text-lg mb-10 max-w-md mx-auto"
+                        className="text-[#8AAEC0] text-lg mb-10 max-w-md mx-auto"
                     >
                         {resultType.description}
                     </motion.p>
 
-                    {/* Score Debug (optional - can be removed in production) */}
+                    {/* Score Display */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.3 }}
-                        className="glass-card p-6 mb-8 text-left"
+                        className="bg-gradient-to-br from-[#082B35] to-black border border-[#8AAEC0]/20 rounded-2xl p-6 mb-8 text-left"
                     >
-                        <p className="text-xs uppercase tracking-wider text-white/40 mb-4">Analysis Scores</p>
+                        <p className="text-xs uppercase tracking-wider text-[#8AAEC0]/50 mb-4">Analysis Scores</p>
                         <div className="grid grid-cols-4 gap-4">
                             {Object.entries(scores).map(([key, value]) => (
                                 <div key={key} className="text-center">
                                     <p className="text-2xl font-serif text-white">{value}</p>
-                                    <p className="text-xs text-white/40 uppercase">{key}</p>
+                                    <p className="text-xs text-[#8AAEC0]/50 uppercase">{key}</p>
                                 </div>
                             ))}
                         </div>
@@ -297,7 +266,7 @@ export default function Diagnosis() {
                             transition={{ delay: 1.4 }}
                             className="mb-10"
                         >
-                            <p className="text-xs uppercase tracking-wider text-white/40 mb-4 text-left">Curated For You</p>
+                            <p className="text-xs uppercase tracking-wider text-[#8AAEC0]/50 mb-4 text-left">Curated For You</p>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 {recommendedProducts.map((product, index) => (
                                     <motion.button
@@ -306,13 +275,13 @@ export default function Diagnosis() {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 1.5 + index * 0.1 }}
                                         onClick={() => navigate(`/shop/${product.id}`)}
-                                        className="glass-card p-4 text-left hover:bg-white/15 transition-all"
+                                        className="bg-gradient-to-br from-[#082B35] to-black border border-[#8AAEC0]/20 rounded-xl p-4 text-left hover:border-[#3C7795]/50 transition-all"
                                     >
-                                        <div className="w-full h-24 bg-white/5 rounded-lg mb-3 flex items-center justify-center">
+                                        <div className="w-full h-24 bg-[#082B35]/50 rounded-lg mb-3 flex items-center justify-center">
                                             <span className="text-2xl">✨</span>
                                         </div>
                                         <p className="text-sm font-medium text-white truncate">{product.nameKo || product.name}</p>
-                                        <p className="text-xs text-white/40 mt-1">₩{product.price?.toLocaleString()}</p>
+                                        <p className="text-xs text-[#8AAEC0]/50 mt-1">₩{product.price?.toLocaleString()}</p>
                                     </motion.button>
                                 ))}
                             </div>
@@ -323,7 +292,7 @@ export default function Diagnosis() {
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="text-white/40 text-sm mb-4"
+                            className="text-[#8AAEC0]/50 text-sm mb-4"
                         >
                             분석 결과 저장 중...
                         </motion.p>
@@ -358,10 +327,10 @@ export default function Diagnosis() {
 
     return (
         <div className="min-h-screen pt-24 pb-20 px-6">
-            {/* Progress Bar */}
-            <div className="fixed top-[80px] left-0 right-0 h-0.5 bg-white/10 z-40">
+            {/* Progress Bar - Cyan gradient (NOT purple) */}
+            <div className="fixed top-[80px] left-0 right-0 h-0.5 bg-[#8AAEC0]/10 z-40">
                 <motion.div
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                    className="h-full bg-gradient-to-r from-[#1E5672] to-[#3C7795]"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.5 }}
@@ -370,7 +339,7 @@ export default function Diagnosis() {
 
             {/* Question Counter */}
             <div className="max-w-2xl mx-auto pt-8 mb-12 text-center">
-                <span className="text-white/40 text-sm">
+                <span className="text-[#8AAEC0]/50 text-sm">
                     Question {currentQuestion + 1} / {totalQuestions}
                 </span>
             </div>
@@ -392,7 +361,7 @@ export default function Diagnosis() {
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Options */}
+                {/* Options - Cyan selection (NOT purple) */}
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={`options-${currentQuestion}`}
@@ -415,8 +384,8 @@ export default function Diagnosis() {
                                 className={`
                                     w-full p-5 text-left rounded-2xl transition-all duration-300
                                     ${selectedOption === index
-                                        ? 'bg-purple-500/30 border-purple-400/50'
-                                        : 'glass-card hover:bg-white/15'
+                                        ? 'bg-gradient-to-r from-[#1E5672] to-[#3C7795] border-[#3C7795]'
+                                        : 'bg-gradient-to-br from-[#082B35] to-black border border-[#8AAEC0]/20 hover:border-[#3C7795]/50'
                                     }
                                 `}
                             >
@@ -429,11 +398,11 @@ export default function Diagnosis() {
                 </AnimatePresence>
             </div>
 
-            {/* Skip Button (optional) */}
+            {/* Skip Button */}
             <div className="max-w-2xl mx-auto mt-10 text-center">
                 <button
                     onClick={handleRestart}
-                    className="text-white/30 hover:text-white/50 text-sm transition-colors"
+                    className="text-[#8AAEC0]/30 hover:text-[#8AAEC0]/50 text-sm transition-colors"
                 >
                     처음부터 다시 시작
                 </button>

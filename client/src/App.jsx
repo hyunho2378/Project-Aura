@@ -29,7 +29,7 @@ import Diagnosis from './pages/Diagnosis';
  */
 function AppLayout({ children, onLoginClick, isLoggedIn, onLogout, user }) {
     return (
-        <div className="relative min-h-screen bg-transparent">
+        <div className="relative min-h-screen bg-black">
             <Header
                 onLoginClick={onLoginClick}
                 isLoggedIn={isLoggedIn}

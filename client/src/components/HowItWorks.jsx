@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { contentData } from '../data/contentData';
 
 /**
- * Icons for process steps
+ * Icons for process steps - Cyan color (#3C7795)
  */
 const icons = {
     Camera: (
@@ -34,18 +34,21 @@ const icons = {
 };
 
 /**
- * HowItWorks Component
+ * HowItWorks Component - PURE BLACK AESTHETIC
  * 
- * Background: Transparent (uses global Deep Navy)
- * Typography:
- * - title: English (Serif font)
- * - descKR: Korean (Sans-serif font) - DO NOT TRANSLATE
+ * STRICT PALETTE:
+ * - Section BG: #000000 (Pure Black)
+ * - Cards: #000000 with subtle border
+ * - Icons/Numbers: #3C7795 (Cyan)
+ * - Titles: #FFFFFF (White)
+ * - Descriptions: #8AAEC0 (Mist)
+ * - NO PURPLE, NO MUDDY TEAL
  */
 export default function HowItWorks() {
     const { processSteps } = contentData;
 
     return (
-        <section className="relative py-24 md:py-32 overflow-hidden bg-transparent">
+        <section className="relative py-24 md:py-32 overflow-hidden bg-black">
             {/* Global Container */}
             <div className="relative max-w-screen-xl mx-auto px-6 lg:px-16">
 
@@ -57,16 +60,17 @@ export default function HowItWorks() {
                     transition={{ duration: 0.8 }}
                     className="text-left mb-16 md:mb-20"
                 >
-                    <p className="text-[11px] uppercase tracking-[0.3em] text-purple-300/60 font-sans mb-4">
+                    {/* Label - Cyan */}
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-[#3C7795] font-sans mb-4">
                         How It Works
                     </p>
                     <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
                         Your Journey to<br />
-                        <span className="text-gradient-purple">Radiant Aura</span>
+                        <span className="text-gradient-cyan">Radiant Aura</span>
                     </h2>
                 </motion.div>
 
-                {/* Process Cards Grid */}
+                {/* Process Cards Grid - PURE BLACK CARDS */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {processSteps.map((step, index) => (
                         <motion.div
@@ -75,37 +79,40 @@ export default function HowItWorks() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            className="group relative bg-white/5 backdrop-blur-md border border-white/10 
-                                       rounded-2xl p-8 md:p-10 min-h-[320px] md:min-h-[360px]
-                                       hover:bg-white/10 hover:border-purple-500/30
+                            className="group relative rounded-2xl p-8 md:p-10 min-h-[320px] md:min-h-[360px]
+                                       bg-black
+                                       border border-[#8AAEC0]/20 
+                                       hover:border-[#3C7795]/50
                                        transition-all duration-500 cursor-default"
                         >
                             {/* Step Number & Icon */}
                             <div className="flex items-start justify-between mb-8">
-                                <span className="text-[11px] font-sans text-purple-400/60 tracking-[0.15em]">
+                                {/* Number - Cyan */}
+                                <span className="text-[11px] font-sans text-[#3C7795] tracking-[0.15em]">
                                     {String(step.id).padStart(2, '0')}
                                 </span>
-                                <div className="text-white/30 group-hover:text-purple-400/80 transition-colors duration-500">
+                                {/* Icon - Mist to Cyan on hover */}
+                                <div className="text-[#8AAEC0]/40 group-hover:text-[#3C7795] transition-colors duration-500">
                                     {icons[step.icon]}
                                 </div>
                             </div>
 
-                            {/* Title - English (Serif) */}
+                            {/* Title - English (Serif) - White */}
                             <h3 className="font-serif text-xl md:text-2xl text-white mb-6 leading-tight">
                                 {step.title}
                             </h3>
 
-                            {/* Description - Korean (Sans-serif) - Fade in on hover */}
+                            {/* Description - Korean (Sans-serif) - Mist on hover */}
                             <p className="font-sans text-sm text-white/0 leading-relaxed
-                                          group-hover:text-white/60
+                                          group-hover:text-[#8AAEC0]
                                           transition-all duration-500 ease-out"
                                 style={{ wordBreak: 'keep-all' }}>
                                 {step.descKR}
                             </p>
 
-                            {/* Decorative Line */}
+                            {/* Decorative Line - Cyan */}
                             <div className="absolute bottom-8 left-8 right-8 h-[1px] 
-                                            bg-gradient-to-r from-purple-500/0 via-purple-500/30 to-purple-500/0 
+                                            bg-gradient-to-r from-[#3C7795]/0 via-[#3C7795]/40 to-[#3C7795]/0 
                                             scale-x-0 group-hover:scale-x-100
                                             transition-transform duration-500 origin-left" />
                         </motion.div>

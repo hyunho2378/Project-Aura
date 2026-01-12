@@ -3,68 +3,64 @@ import { Link } from 'react-router-dom';
 import { ALL_PRODUCTS } from '../data/productsData';
 
 /**
- * Shop Page - Personalized Recommendations (Analysis Result)
+ * Shop Page - LUXURY TECH Aesthetic
  * 
- * Visual Refinements:
- * - 게스트 (Korean for Guest)
- * - Single line description
- * - Divider line below header
- * - Tight spacing
- * - 3-column grid
- * 
- * Background: Transparent (uses global Deep Navy)
+ * STRICT PALETTE:
+ * - Highlight: #3C7795 (Cyan)
+ * - Mist: #8AAEC0 (Secondary text)
+ * - Surface: #082B35 (Cards)
+ * - Void: #000000 (Background)
+ * - NO PURPLE / NO GRAY
  */
 export default function Shop() {
-    // Simulate logged-in user with 수부지 skin type
     const userSkinType = "수부지";
     const userName = "게스트";
 
-    // Filter products for user's skin type
     const recommendedProducts = ALL_PRODUCTS.filter(p => p.skinType === userSkinType);
 
     return (
         <main className="min-h-screen bg-transparent relative z-10">
-            {/* Compact Header Section - Reduced padding */}
+            {/* Header Section */}
             <div className="max-w-5xl mx-auto px-6 pt-24 pb-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    {/* Label */}
-                    <p className="text-purple-400 font-bold tracking-widest text-xs mb-3 uppercase font-sans">
+                    {/* Label - Cyan */}
+                    <p className="text-[#3C7795] font-bold tracking-widest text-xs mb-3 uppercase font-sans">
                         AI Personalized
                     </p>
 
-                    {/* Title - Korean */}
+                    {/* Title - Stark White */}
                     <h1 className="text-4xl md:text-5xl font-serif text-white mb-4 leading-tight">
                         <span className="text-white">{userName}</span>님을 위한<br />
-                        <span className="text-gradient-purple">맞춤 처방</span>
+                        <span className="text-gradient-cyan">맞춤 처방</span>
                     </h1>
 
-                    {/* Description - SINGLE LINE */}
-                    <p className="text-gray-300 text-base md:text-lg mb-6 font-sans whitespace-nowrap overflow-hidden text-ellipsis"
+                    {/* Description - Mist */}
+                    <p className="text-[#8AAEC0] text-base md:text-lg mb-6 font-sans whitespace-nowrap overflow-hidden text-ellipsis"
                         style={{ wordBreak: 'keep-all' }}>
-                        {userName}님의 피부 타입 분석 결과에 기반한 최적의 솔루션입니다. AI가 분석한 <span className="text-purple-400 font-bold">{userSkinType}</span> 피부에 맞는 제품을 추천해 드립니다.
+                        {userName}님의 피부 타입 분석 결과에 기반한 최적의 솔루션입니다. AI가 분석한 <span className="text-[#3C7795] font-bold">{userSkinType}</span> 피부에 맞는 제품을 추천해 드립니다.
                     </p>
 
-                    {/* Divider Line */}
-                    <div className="w-full h-px bg-white/20 mb-8" />
+                    {/* Divider */}
+                    <div className="w-full h-px bg-[#8AAEC0]/15 mb-8" />
                 </motion.div>
 
-                {/* Skin Type Badge & Count */}
+                {/* Skin Type Badge */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="flex items-center gap-4 mb-8"
                 >
-                    <div className="px-4 py-2 bg-purple-500/20 border border-purple-400/30 rounded-full">
-                        <span className="text-sm font-sans text-purple-300">
+                    <div className="px-4 py-2 bg-gradient-to-r from-[#1E5672]/30 to-[#3C7795]/30 border border-[#3C7795]/30 rounded-full">
+                        <span className="text-sm font-sans text-[#8AAEC0]">
                             피부 타입: <span className="font-bold text-white">{userSkinType}</span>
                         </span>
                     </div>
-                    <span className="text-sm text-white/40 font-sans">
+                    <span className="text-sm text-[#8AAEC0]/50 font-sans">
                         {recommendedProducts.length}개의 맞춤 제품
                     </span>
                 </motion.div>
@@ -77,7 +73,6 @@ export default function Shop() {
                     className="grid grid-cols-1 md:grid-cols-3 gap-6"
                 >
                     {recommendedProducts.map((product, index) => {
-                        // Calculate match rate for each product (85-99%)
                         const matchRate = 85 + (product.id % 15);
 
                         return (
@@ -91,14 +86,19 @@ export default function Shop() {
                                     to={`/shop/${product.id}`}
                                     className="group block"
                                 >
-                                    {/* Card - Glassmorphism with Match Score */}
-                                    <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden
-                                                    hover:bg-white/10 hover:border-purple-500/30 transition-all duration-500">
+                                    {/* Card - LUXURY TECH */}
+                                    <div className="relative rounded-3xl overflow-hidden
+                                                    bg-gradient-to-br from-[#082B35] to-black
+                                                    border border-[#8AAEC0]/20 
+                                                    hover:border-[#3C7795]/50
+                                                    hover:shadow-[0_0_30px_-10px_rgba(60,119,149,0.30)]
+                                                    transition-all duration-300">
 
-                                        {/* Match Score Badge */}
+                                        {/* Match Score Badge - Cyan Gradient */}
                                         <div className="absolute top-3 left-3 z-10">
                                             <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider font-sans
-                                                           bg-purple-500/30 backdrop-blur-sm text-purple-200 rounded-full border border-purple-400/30">
+                                                           bg-gradient-to-r from-[#1E5672] to-[#3C7795] 
+                                                           text-white rounded-full border border-white/15">
                                                 {matchRate}% Match
                                             </span>
                                         </div>
@@ -107,7 +107,7 @@ export default function Shop() {
                                         {product.tag && (
                                             <div className="absolute top-3 right-3 z-10">
                                                 <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-sans
-                                                               bg-white/10 backdrop-blur-sm text-white/80 rounded-full">
+                                                               bg-[#082B35]/70 text-[#8AAEC0] rounded-full border border-[#8AAEC0]/20">
                                                     {product.tag}
                                                 </span>
                                             </div>
@@ -115,29 +115,28 @@ export default function Shop() {
 
                                         {/* Image Area */}
                                         <div className={`aspect-[4/5] ${product.imageColor} relative overflow-hidden`}>
-                                            {/* Gradient overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f29]/50 to-transparent" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                                         </div>
 
                                         {/* Content */}
                                         <div className="p-5">
-                                            {/* Category */}
-                                            <p className="text-[10px] uppercase tracking-[0.15em] text-white/30 font-sans mb-1">
+                                            {/* Category - Cyan */}
+                                            <p className="text-[10px] uppercase tracking-[0.15em] text-[#3C7795] font-sans mb-1">
                                                 {product.category}
                                             </p>
 
-                                            {/* Name - English (Serif) */}
-                                            <h3 className="font-serif text-base text-white mb-1 group-hover:text-purple-300 transition-colors">
+                                            {/* Name */}
+                                            <h3 className="font-serif text-base text-white mb-1 group-hover:text-[#3C7795] transition-colors">
                                                 {product.name}
                                             </h3>
 
-                                            {/* Price */}
-                                            <p className="font-sans text-sm text-white/60 mb-3">
+                                            {/* Price - Mist */}
+                                            <p className="font-sans text-sm text-[#8AAEC0] mb-3">
                                                 {product.price}
                                             </p>
 
-                                            {/* Description - Korean */}
-                                            <p className="font-sans text-xs text-white/40 leading-relaxed line-clamp-2" style={{ wordBreak: 'keep-all' }}>
+                                            {/* Description - Mist dimmed */}
+                                            <p className="font-sans text-xs text-[#8AAEC0]/60 leading-relaxed line-clamp-2" style={{ wordBreak: 'keep-all' }}>
                                                 {product.desc}
                                             </p>
                                         </div>
@@ -149,7 +148,6 @@ export default function Shop() {
                 </motion.div>
             </div>
 
-            {/* Bottom Spacing */}
             <div className="pb-16" />
         </main>
     );

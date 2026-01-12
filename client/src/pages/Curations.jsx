@@ -4,49 +4,36 @@ import { Link } from 'react-router-dom';
 import { ALL_PRODUCTS } from '../data/productsData';
 
 /**
- * Get unique categories from products
+ * Curations Page - LUXURY TECH Aesthetic
+ * 
+ * STRICT PALETTE:
+ * - Highlight: #3C7795 (Cyan)
+ * - Mist: #8AAEC0 (Secondary text)
+ * - Surface: #082B35 (Cards)
+ * - Void: #000000 (Background)
+ * - NO PURPLE
  */
+
 const categories = ["전체 보기", ...new Set(ALL_PRODUCTS.map(p => p.category))];
-
-/**
- * Get unique skin types for additional filtering
- */
 const skinTypes = ["전체", "수부지", "지성", "민감성", "건성", "복합성"];
-
-/**
- * Items per page for pagination
- */
 const ITEMS_PER_PAGE = 12;
 
-/**
- * Curations Page - Product Grid with Pagination
- * 
- * Features:
- * - Skin type filter
- * - Category filter
- * - Client-side pagination (12 items per page)
- * 
- * Background: Transparent (uses global Deep Navy)
- */
 export default function Curations() {
     const [activeCategory, setActiveCategory] = useState("전체 보기");
     const [activeSkinType, setActiveSkinType] = useState("전체");
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Filter products
     const filteredProducts = ALL_PRODUCTS.filter(p => {
         const categoryMatch = activeCategory === "전체 보기" || p.category === activeCategory;
         const skinTypeMatch = activeSkinType === "전체" || p.skinType === activeSkinType;
         return categoryMatch && skinTypeMatch;
     });
 
-    // Calculate pagination
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
-    // Reset to page 1 when filters change
     const handleCategoryChange = (category) => {
         setActiveCategory(category);
         setCurrentPage(1);
@@ -57,7 +44,6 @@ export default function Curations() {
         setCurrentPage(1);
     };
 
-    // Generate page numbers for pagination
     const getPageNumbers = () => {
         const pages = [];
         if (totalPages <= 5) {
@@ -87,14 +73,14 @@ export default function Curations() {
                         transition={{ duration: 0.8 }}
                         className="max-w-2xl"
                     >
-                        <p className="text-[11px] uppercase tracking-[0.3em] text-purple-300/60 font-sans mb-4">
+                        <p className="text-[11px] uppercase tracking-[0.3em] text-[#3C7795] font-sans mb-4">
                             Curated For You
                         </p>
                         <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-4">
                             Rituals Designed<br />
-                            <span className="text-gradient-purple">For Your Skin</span>
+                            <span className="text-gradient-cyan">For Your Skin</span>
                         </h1>
-                        <p className="font-sans text-base text-white/50 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                        <p className="font-sans text-base text-[#8AAEC0] leading-relaxed" style={{ wordBreak: 'keep-all' }}>
                             전문적으로 큐레이션 된 50가지 컬렉션을 만나보세요. 당신의 피부 타입에 맞춰 설계된 리추얼입니다.
                         </p>
                     </motion.div>
@@ -110,17 +96,16 @@ export default function Curations() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="flex flex-wrap items-center gap-2 mb-4"
                     >
-                        <span className="text-xs text-white/40 font-sans mr-2">피부 타입:</span>
+                        <span className="text-xs text-[#8AAEC0]/50 font-sans mr-2">피부 타입:</span>
                         {skinTypes.map((type) => (
                             <button
                                 key={type}
                                 onClick={() => handleSkinTypeChange(type)}
                                 className={`
-                                    px-3 py-1.5 rounded-full text-xs font-sans tracking-wide
-                                    transition-all duration-300
+                                    px-3 py-1.5 rounded-full text-xs font-sans tracking-wide transition-all duration-300
                                     ${activeSkinType === type
-                                        ? 'bg-purple-500 text-white'
-                                        : 'bg-white/5 text-white/50 hover:text-white hover:bg-white/10'
+                                        ? 'bg-gradient-to-r from-[#1E5672] to-[#3C7795] text-white border border-white/15'
+                                        : 'bg-[#082B35]/50 text-[#8AAEC0] hover:text-white hover:bg-[#082B35]/70 border border-[#8AAEC0]/15'
                                     }
                                 `}
                             >
@@ -145,11 +130,10 @@ export default function Curations() {
                                 key={category}
                                 onClick={() => handleCategoryChange(category)}
                                 className={`
-                                    px-4 py-2 rounded-full text-sm font-sans tracking-wide
-                                    transition-all duration-300 border
+                                    px-4 py-2 rounded-full text-sm font-sans tracking-wide transition-all duration-300 border
                                     ${activeCategory === category
-                                        ? 'bg-white text-[#0a0f29] border-white'
-                                        : 'bg-white/5 text-white/60 border-white/10 hover:border-white/30 hover:text-white backdrop-blur-sm'
+                                        ? 'bg-white text-black border-white font-medium'
+                                        : 'bg-transparent text-[#8AAEC0] border-[#8AAEC0]/20 hover:border-[#3C7795]/50 hover:text-white'
                                     }
                                 `}
                             >
@@ -163,7 +147,7 @@ export default function Curations() {
             {/* Results Count */}
             <section className="pb-4">
                 <div className="max-w-screen-xl mx-auto px-6 lg:px-16">
-                    <p className="text-sm text-white/40 font-sans">
+                    <p className="text-sm text-[#8AAEC0]/50 font-sans">
                         {filteredProducts.length}개의 제품 중 {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} 표시
                     </p>
                 </div>
@@ -184,15 +168,19 @@ export default function Curations() {
                                     to={`/curations/${product.id}`}
                                     className="group block"
                                 >
-                                    {/* Card - Glassmorphism */}
-                                    <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden
-                                                    hover:bg-white/10 hover:border-purple-500/30 transition-all duration-500">
+                                    {/* Card - LUXURY TECH */}
+                                    <div className="relative rounded-3xl overflow-hidden
+                                                    bg-gradient-to-br from-[#082B35] to-black
+                                                    border border-[#8AAEC0]/20 
+                                                    hover:border-[#3C7795]/50
+                                                    hover:shadow-[0_0_30px_-10px_rgba(60,119,149,0.30)]
+                                                    transition-all duration-300">
 
-                                        {/* Tag */}
+                                        {/* Tag - Cyan Gradient Badge */}
                                         {product.tag && (
                                             <div className="absolute top-3 left-3 z-10">
-                                                <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-sans
-                                                               bg-white/10 backdrop-blur-sm text-white/80 rounded-full">
+                                                <span className="px-2.5 py-1 text-[9px] uppercase tracking-wider font-sans
+                                                               bg-gradient-to-r from-[#1E5672] to-[#3C7795] text-white rounded-full border border-white/15">
                                                     {product.tag}
                                                 </span>
                                             </div>
@@ -200,28 +188,35 @@ export default function Curations() {
 
                                         {/* Skin Type Badge */}
                                         <div className="absolute top-3 right-3 z-10">
-                                            <span className="px-2 py-0.5 text-[9px] font-sans text-purple-300/80 bg-purple-500/20 rounded-full">
+                                            <span className="px-2 py-0.5 text-[9px] font-sans text-[#3C7795] bg-[#082B35]/70 rounded-full border border-[#3C7795]/30">
                                                 {product.skinType}
                                             </span>
                                         </div>
 
                                         {/* Image Area */}
                                         <div className={`aspect-[4/5] ${product.imageColor} relative overflow-hidden`}>
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f29]/50 to-transparent" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                                         </div>
 
                                         {/* Content */}
                                         <div className="p-4">
-                                            <p className="text-[9px] uppercase tracking-[0.15em] text-white/30 font-sans mb-1">
+                                            {/* Category - Cyan */}
+                                            <p className="text-[9px] uppercase tracking-[0.15em] text-[#3C7795] font-sans mb-1">
                                                 {product.category}
                                             </p>
-                                            <h3 className="font-serif text-sm text-white mb-1 group-hover:text-purple-300 transition-colors line-clamp-1">
+
+                                            {/* Name */}
+                                            <h3 className="font-serif text-sm text-white mb-1 group-hover:text-[#3C7795] transition-colors line-clamp-1">
                                                 {product.name}
                                             </h3>
-                                            <p className="font-sans text-xs text-white/60 mb-2">
+
+                                            {/* Price - Mist */}
+                                            <p className="font-sans text-xs text-[#8AAEC0] mb-2">
                                                 {product.price}
                                             </p>
-                                            <p className="font-sans text-[11px] text-white/40 leading-relaxed line-clamp-2" style={{ wordBreak: 'keep-all' }}>
+
+                                            {/* Description - Mist dimmed */}
+                                            <p className="font-sans text-[11px] text-[#8AAEC0]/60 leading-relaxed line-clamp-2" style={{ wordBreak: 'keep-all' }}>
                                                 {product.desc}
                                             </p>
                                         </div>
@@ -249,8 +244,8 @@ export default function Curations() {
                                 disabled={currentPage === 1}
                                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
                                     ${currentPage === 1
-                                        ? 'text-white/20 cursor-not-allowed'
-                                        : 'text-white/60 hover:text-white hover:bg-white/10'
+                                        ? 'text-[#8AAEC0]/20 cursor-not-allowed'
+                                        : 'text-[#8AAEC0] hover:text-white hover:bg-[#082B35]/50'
                                     }`}
                             >
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -266,10 +261,10 @@ export default function Curations() {
                                     disabled={page === '...'}
                                     className={`min-w-[40px] h-10 rounded-full flex items-center justify-center font-sans text-sm transition-all duration-300
                                         ${page === currentPage
-                                            ? 'bg-white text-[#0a0f29] font-bold'
+                                            ? 'bg-gradient-to-r from-[#1E5672] to-[#3C7795] text-white font-bold border border-white/15'
                                             : page === '...'
-                                                ? 'text-white/40 cursor-default'
-                                                : 'text-white/50 hover:text-white hover:bg-white/10'
+                                                ? 'text-[#8AAEC0]/40 cursor-default'
+                                                : 'text-[#8AAEC0] hover:text-white hover:bg-[#082B35]/50'
                                         }`}
                                 >
                                     {page}
@@ -282,8 +277,8 @@ export default function Curations() {
                                 disabled={currentPage === totalPages}
                                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
                                     ${currentPage === totalPages
-                                        ? 'text-white/20 cursor-not-allowed'
-                                        : 'text-white/60 hover:text-white hover:bg-white/10'
+                                        ? 'text-[#8AAEC0]/20 cursor-not-allowed'
+                                        : 'text-[#8AAEC0] hover:text-white hover:bg-[#082B35]/50'
                                     }`}
                             >
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
